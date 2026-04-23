@@ -1,26 +1,224 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* === BRAND COLORS (OKLCH, perceptually uniform) === */
+  /* Primary — verde lima #BDF23D */
+  --color-primary: oklch(0.905 0.215 118);
+  --color-primary-50: oklch(0.985 0.03 118);
+  --color-primary-100: oklch(0.97 0.06 118);
+  --color-primary-200: oklch(0.95 0.12 118);
+  --color-primary-300: oklch(0.93 0.18 118);
+  --color-primary-400: oklch(0.905 0.215 118);
+  --color-primary-500: oklch(0.86 0.215 118);
+  --color-primary-600: oklch(0.74 0.19 120);
+  --color-primary-700: oklch(0.58 0.16 124);
+  --color-primary-800: oklch(0.42 0.12 128);
+  --color-primary-900: oklch(0.27 0.08 130);
+
+  /* Secondary — verde escuro #26340E */
+  --color-secondary: oklch(0.27 0.08 130);
+  --color-secondary-50: oklch(0.97 0.015 130);
+  --color-secondary-100: oklch(0.93 0.025 130);
+  --color-secondary-200: oklch(0.85 0.04 130);
+  --color-secondary-300: oklch(0.74 0.055 130);
+  --color-secondary-400: oklch(0.58 0.07 130);
+  --color-secondary-500: oklch(0.42 0.075 130);
+  --color-secondary-600: oklch(0.34 0.08 130);
+  --color-secondary-700: oklch(0.27 0.08 130);
+  --color-secondary-800: oklch(0.21 0.07 130);
+  --color-secondary-900: oklch(0.15 0.05 130);
+
+  /* Tertiary — off-white esverdeado #F9FFF1 */
+  --color-tertiary: oklch(0.99 0.018 120);
+  --color-tertiary-soft: oklch(0.975 0.025 120);
+
+  /* Neutral — preto esverdeado #121909 (tinted toward brand hue per impeccable) */
+  --color-neutral: oklch(0.165 0.028 130);
+  --color-neutral-50: oklch(0.98 0.006 130);
+  --color-neutral-100: oklch(0.94 0.008 130);
+  --color-neutral-200: oklch(0.88 0.01 130);
+  --color-neutral-300: oklch(0.78 0.012 130);
+  --color-neutral-400: oklch(0.62 0.014 130);
+  --color-neutral-500: oklch(0.48 0.016 130);
+  --color-neutral-600: oklch(0.36 0.02 130);
+  --color-neutral-700: oklch(0.26 0.024 130);
+  --color-neutral-800: oklch(0.2 0.026 130);
+  --color-neutral-900: oklch(0.165 0.028 130);
+
+  /* === TYPOGRAPHY === */
+  --font-display: var(--font-lexend), system-ui, sans-serif;
+  --font-body: var(--font-noto-serif), Georgia, serif;
+  --font-label: var(--font-public-sans), system-ui, sans-serif;
+  --font-accent: var(--font-playfair), Georgia, serif;
+
+  /* === EASING CURVES (emil-design-eng) === */
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* === RADII === */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* === BASE === */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  font-feature-settings: "ss01", "kern";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--color-tertiary);
+  color: var(--color-neutral);
+}
+
+::selection {
+  background: var(--color-primary);
+  color: var(--color-secondary-900);
+}
+
+/* === UTILITIES === */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+.font-body {
+  font-family: var(--font-body);
+}
+.font-accent {
+  font-family: var(--font-accent);
+  font-style: italic;
+}
+.font-label {
+  font-family: var(--font-label);
+  letter-spacing: 0.01em;
+}
+
+/* Fluid type for marketing headings */
+.text-display-xl {
+  font-size: clamp(2.75rem, 1.5rem + 6vw, 6.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+.text-display-lg {
+  font-size: clamp(2.25rem, 1.25rem + 4vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+}
+.text-display-md {
+  font-size: clamp(1.75rem, 1rem + 2.5vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+.text-display-sm {
+  font-size: clamp(1.35rem, 0.9rem + 1.5vw, 1.875rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  font-weight: 500;
+}
+
+/* Button press feedback — emil */
+.btn-press {
+  transition: transform 160ms var(--ease-out-strong);
+}
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+/* Hover gated to fine pointers (emil) */
+@media (hover: hover) and (pointer: fine) {
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* Stagger — emil */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.anim-fade-up {
+  animation: fade-up 600ms var(--ease-out-strong) both;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-tertiary); }
+::-webkit-scrollbar-thumb { background: var(--color-secondary-300); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-secondary-500); }
+
+/* ── Onboarding brand panel animated mesh ── */
+@keyframes mesh-drift-a {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  33%       { transform: translate(8%, -6%) scale(1.08); }
+  66%       { transform: translate(-5%, 10%) scale(0.96); }
+}
+@keyframes mesh-drift-b {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  33%       { transform: translate(-10%, 8%) scale(0.94); }
+  66%       { transform: translate(6%, -8%) scale(1.05); }
+}
+
+.onboarding-mesh::before,
+.onboarding-mesh::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  pointer-events: none;
+}
+.onboarding-mesh::before {
+  width: 360px;
+  height: 360px;
+  top: -80px;
+  left: -80px;
+  background: oklch(0.905 0.215 118 / 0.16);
+  animation: mesh-drift-a 14s ease-in-out infinite;
+}
+.onboarding-mesh::after {
+  width: 300px;
+  height: 300px;
+  bottom: -60px;
+  right: -60px;
+  background: oklch(0.905 0.215 118 / 0.10);
+  animation: mesh-drift-b 18s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .onboarding-mesh::before,
+  .onboarding-mesh::after {
+    animation: none;
+  }
+}
+
+/* Noise texture for background (subtle editorial feel) */
+.noise-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
 }

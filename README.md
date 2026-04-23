@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Energy Solar Green (ESG)
 
-## Getting Started
+Site institucional + onboarding de adesão à geração compartilhada.
 
-First, run the development server:
+## Stack
+
+- **Next.js 15** (App Router, Turbopack, TypeScript)
+- **Tailwind CSS v4** com design tokens em OKLCH
+- **GSAP** (hero timeline) + **Framer Motion** (microinterações)
+- **Zustand** com persist (state do onboarding)
+- **Supabase** (client placeholder, plug-and-play para a futura área do cliente)
+- **react-hook-form + zod** disponíveis
+- **react-dropzone** (upload da conta de luz)
+
+## Rodar
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npm run build      # produção
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Design system
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Fontes**: Lexend (display), Noto Serif (body), Public Sans (labels)
+- **Cores**: primary `#BDF23D` · secondary `#26340E` · tertiary `#F9FFF1` · neutral `#121909`
+- **Identidade**: editorial / refined minimal, acento verde lima em uso raro (60-30-10)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Rotas
 
-## Learn More
+| Rota | Descrição |
+| --- | --- |
+| `/` | Landing (hero, calculadora, impacto, benefícios, FAQ) |
+| `/onboarding/distribuidora` → `/onboarding/termo` | Fluxo de 9 passos |
+| `/onboarding/sucesso` | Conclusão |
+| `/dashboard` | Placeholder para área do cliente |
 
-To learn more about Next.js, take a look at the following resources:
+## Calculadora de economia
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Conta mensal | Desconto |
+| --- | --- |
+| ≤ R$ 800 | 10% |
+| R$ 800 – R$ 1.500 | 15% |
+| > R$ 1.500 | 20% |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Lógica em [`lib/utils.ts`](lib/utils.ts) (`calculateSavings`, `getDiscountPercent`).
 
-## Deploy on Vercel
+## Onboarding
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+O state do onboarding é persistido em `localStorage` via Zustand (`lib/onboarding-store.ts`). Para ligar ao Supabase, configure as envs e use `getSupabase()`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Schema sugerido comentado em `lib/supabase.ts`: `users`, `subscriptions`, `invoices`, `properties`, `onboarding_drafts`.

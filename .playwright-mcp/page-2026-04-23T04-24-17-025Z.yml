@@ -1,0 +1,59 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - link "Home" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "Energy Solar Green" [ref=e5]
+      - generic [ref=e7]:
+        - generic [ref=e8]: Passo 1 de 9
+        - generic [ref=e11]: Distribuidora
+      - link "Sair" [ref=e12] [cursor=pointer]:
+        - /url: /
+    - main [ref=e13]:
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - generic [ref=e16]:
+            - generic [ref=e17]: Distribuidora de energia
+            - heading "A economia começa agora!" [level=2] [ref=e19]
+            - paragraph [ref=e20]: A ESG é uma escolha limpa, inteligente e econômica para sua casa ou empresa.
+          - list [ref=e23]:
+            - listitem [ref=e24]:
+              - img [ref=e26]
+              - generic [ref=e28]: 15–20% de desconto na conta de luz
+            - listitem [ref=e29]:
+              - img [ref=e31]
+              - generic [ref=e34]: Zero instalação — 100% digital
+            - listitem [ref=e35]:
+              - img [ref=e37]
+              - generic [ref=e40]: Dados protegidos • LGPD compliant
+        - generic [ref=e44]:
+          - text: Sua distribuidora de energia
+          - combobox "Sua distribuidora de energia" [ref=e45]:
+            - option "Selecione sua distribuidora" [disabled] [selected]
+            - option "Light"
+            - option "Enel Rio"
+            - option "Enel SP"
+            - option "Enel Ceará"
+            - option "Cemig"
+            - option "Copel"
+            - option "CPFL Paulista"
+            - option "Elektro"
+            - option "EDP São Paulo"
+            - option "EDP Espírito Santo"
+            - option "Energisa MT"
+            - option "Energisa MS"
+            - option "Neoenergia Coelba"
+            - option "Neoenergia Pernambuco"
+            - option "Equatorial Pará"
+            - option "Equatorial Maranhão"
+            - option "Equatorial Piauí"
+            - option "Equatorial Goiás"
+          - link "Já iniciei meu cadastro" [ref=e46] [cursor=pointer]:
+            - /url: /entrar
+          - generic [ref=e47]:
+            - button "Continuar" [disabled]:
+              - text: Continuar
+              - img
+  - button "Open Next.js Dev Tools" [ref=e53] [cursor=pointer]:
+    - img [ref=e54]
+  - alert [ref=e57]
