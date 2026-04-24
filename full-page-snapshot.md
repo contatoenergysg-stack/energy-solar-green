@@ -1,0 +1,34 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Energy Solar Green - página inicial" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e6]
+      - generic [ref=e12]
+  - main [ref=e17]:
+    - generic [ref=e22]:
+      - heading "Sua economia faz o mundo girar melhor." [level=1] [ref=e23]
+      - paragraph [ref=e26]: Toda a economia da energia solar, com a facilidade de uma assinatura.
+      - generic [ref=e27]
+    - generic [ref=e36]:
+      - generic [ref=e37]
+      - generic [ref=e45]
+    - generic [ref=e87]:
+      - generic [ref=e88]
+      - generic [ref=e94]
+    - generic [ref=e123]:
+      - generic [ref=e124]
+      - generic [ref=e133]
+    - generic [ref=e152]:
+      - generic [ref=e154]
+      - generic [ref=e158]
+    - generic [ref=e202]:
+      - paragraph [ref=e203]: Perguntas frequentes
+      - heading "Tudo o que você quis perguntar." [level=2] [ref=e205]
+      - generic [ref=e206]
+  - contentinfo [ref=e251]:
+    - generic [ref=e252]:
+      - generic [ref=e253]
+      - generic [ref=e292]
+      - paragraph [ref=e309]: © 2026 Energy Solar Green · Associação de Geração Compartilhada regulamentada pela Resolução Normativa 1.000/2021 da ANEEL. Os descontos variam conforme o valor da fatura e podem ser alterados de acordo com regulamentação do setor.
+  - alert [ref=e317]

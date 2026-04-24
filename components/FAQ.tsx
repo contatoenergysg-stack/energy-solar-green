@@ -5,7 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Plus } from "lucide-react";
 import { gsap, ScrollTrigger, revealFadeUp } from "@/lib/gsap";
 
-const FAQS = [
+type FaqItem = { q: string; a: string; isHtml?: boolean };
+
+const FAQS: FaqItem[] = [
   {
     q: "Preciso instalar painéis solares em casa?",
     a: "Não. A energia é gerada em nossas usinas solares e injetada na rede elétrica. Os créditos aparecem direto na sua fatura.",
@@ -24,7 +26,8 @@ const FAQS = [
   },
   {
     q: "Isso é legal? É regulamentado?",
-    a: "Sim. A Geração Compartilhada está prevista na Resolução Normativa 1.000/2021 da ANEEL. É um modelo 100% regulamentado.",
+    a: 'Sim. A Geração Compartilhada está prevista na <a href="https://www.aneel.gov.br/resolucoes-normativas/-/asset_publisher/ukrBQHpIrPHM/content/rn-n-1000-2021/656877" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 hover:text-secondary-900 transition-colors">Resolução Normativa 1.000/2021 da ANEEL</a>. É um modelo 100% regulamentado.',
+    isHtml: true,
   },
   {
     q: "Meu CNPJ pode aderir também?",
@@ -110,9 +113,16 @@ export function FAQ() {
                       transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
                       style={{ overflow: "hidden" }}
                     >
-                      <p className="font-body text-secondary-700 text-lg leading-relaxed pb-6 pr-16 max-w-[65ch]">
-                        {f.a}
-                      </p>
+                      {f.isHtml ? (
+                        <p
+                          className="font-body text-secondary-700 text-lg leading-relaxed pb-6 pr-16 max-w-[65ch]"
+                          dangerouslySetInnerHTML={{ __html: f.a }}
+                        />
+                      ) : (
+                        <p className="font-body text-secondary-700 text-lg leading-relaxed pb-6 pr-16 max-w-[65ch]">
+                          {f.a}
+                        </p>
+                      )}
                     </motion.div>
                   )}
                 </AnimatePresence>

@@ -46,14 +46,19 @@ export default function Page() {
       accent="Criação de conta"
     >
       <form onSubmit={onSubmit} className="space-y-4">
-        <Input
-          label="Nome completo"
-          placeholder="Como vamos te chamar?"
-          value={data.name}
-          onChange={(e) => update({ name: e.target.value })}
-          required
-          autoComplete="name"
-        />
+        <div>
+          <Input
+            label="Nome para contato"
+            placeholder="Como vamos te chamar?"
+            value={data.name}
+            onChange={(e) => update({ name: e.target.value })}
+            required
+            autoComplete="name"
+          />
+          <p className="mt-1.5 font-label text-[11px] text-secondary-500">
+            Quem vai receber faturas e suporte. Pode ser diferente do titular da conta de luz.
+          </p>
+        </div>
         <Input
           label="E-mail"
           type="email"

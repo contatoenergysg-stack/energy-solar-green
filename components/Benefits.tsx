@@ -20,7 +20,7 @@ const BENEFITS = [
   {
     icon: Timer,
     title: "Adesão em 5 minutos",
-    desc: "100% online. Sem fila, sem burocracia, sem obras na sua casa.",
+    desc: "100% online. Sem fila, sem burocracia, sem obras na sua casa. Ativação pela distribuidora em 30–60 dias.",
   },
   {
     icon: Ban,
@@ -87,6 +87,10 @@ export function Benefits() {
                 pela sua energia.
               </span>
             </h2>
+          </div>
+          <div className="ben-heading flex items-center gap-2 text-sm font-label bg-primary/20 text-secondary-800 px-4 py-2 rounded-full shrink-0">
+            <span className="inline-block w-2 h-2 rounded-full bg-primary" />
+            Adesão em 5 min &nbsp;·&nbsp; Ativo em 30–60 dias
           </div>
         </div>
 

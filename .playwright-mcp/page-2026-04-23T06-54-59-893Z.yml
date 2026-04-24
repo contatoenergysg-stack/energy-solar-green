@@ -1,0 +1,262 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Energy Solar Green - página inicial" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "Energy Solar Green" [ref=e5]
+      - navigation [ref=e6]:
+        - link "Como funciona" [ref=e7] [cursor=pointer]:
+          - /url: "#como-funciona"
+        - link "Calculadora" [ref=e8] [cursor=pointer]:
+          - /url: "#calculadora"
+        - link "Impacto" [ref=e9] [cursor=pointer]:
+          - /url: "#impacto"
+        - link "Benefícios" [ref=e10] [cursor=pointer]:
+          - /url: "#beneficios"
+        - link "FAQ" [ref=e11] [cursor=pointer]:
+          - /url: "#faq"
+      - generic [ref=e12]:
+        - link "Entrar" [ref=e13] [cursor=pointer]:
+          - /url: /entrar
+        - link "Começar" [ref=e14] [cursor=pointer]:
+          - /url: /onboarding/distribuidora
+          - button "Começar" [ref=e15]:
+            - text: Começar
+            - generic [ref=e16]: →
+  - main [ref=e17]:
+    - generic [ref=e22]:
+      - heading "Sua economia faz o mundo girar melhor." [level=1] [ref=e23]:
+        - text: Sua
+        - emphasis [ref=e24]: economia
+        - text: faz o mundo girar
+        - emphasis [ref=e25]: melhor
+        - text: .
+      - paragraph [ref=e26]: Toda a economia da energia solar, com a facilidade de uma assinatura.
+      - generic [ref=e27]:
+        - link "Começar agora" [ref=e28] [cursor=pointer]:
+          - /url: /onboarding/distribuidora
+          - button "Começar agora" [ref=e29]:
+            - text: Começar agora
+            - img [ref=e30]
+        - link "Calcular minha economia" [ref=e33] [cursor=pointer]:
+          - /url: "#calculadora"
+          - button "Calcular minha economia" [ref=e34]
+    - generic [ref=e36]:
+      - generic [ref=e37]:
+        - generic [ref=e38]:
+          - paragraph [ref=e39]: Como funciona
+          - heading "Você continua na mesma distribuidora. Só que economizando." [level=2] [ref=e41]
+        - paragraph [ref=e42]: Nada muda no seu dia a dia. A mesma energia, o mesmo medidor, a mesma distribuidora — com uma fatura menor.
+      - generic [ref=e45]:
+        - generic [ref=e46]:
+          - generic [ref=e47]:
+            - generic [ref=e48]: "01"
+            - img [ref=e50]
+          - heading "Você se associa" [level=3] [ref=e53]
+          - paragraph [ref=e54]: Em 5 minutos, conosco online. Enviamos seus dados para sua distribuidora.
+        - generic [ref=e55]:
+          - generic [ref=e56]:
+            - generic [ref=e57]: "02"
+            - img [ref=e59]
+          - heading "Geramos energia" [level=3] [ref=e65]
+          - paragraph [ref=e66]: Nossas usinas solares produzem energia limpa e injetam na rede.
+        - generic [ref=e67]:
+          - generic [ref=e68]:
+            - generic [ref=e69]: "03"
+            - img [ref=e71]
+          - heading "Créditos aparecem" [level=3] [ref=e73]
+          - paragraph [ref=e74]: Os créditos de energia aparecem direto na fatura da sua distribuidora.
+        - generic [ref=e75]:
+          - generic [ref=e76]:
+            - generic [ref=e77]: "04"
+            - img [ref=e79]
+          - heading "Você economiza" [level=3] [ref=e82]
+          - paragraph [ref=e83]: Paga a distribuidora pelo valor reduzido e a ESG pelo valor com desconto.
+    - generic [ref=e87]:
+      - generic [ref=e88]:
+        - paragraph [ref=e89]: Calculadora
+        - heading "Quanto você pode economizar em um ano?" [level=2] [ref=e91]:
+          - text: Quanto você pode
+          - text: economizar
+          - text: em um ano?
+        - paragraph [ref=e92]: Informe o valor médio da sua conta de luz. Calculamos sua economia anual em tempo real.
+      - generic [ref=e94]:
+        - generic [ref=e95]:
+          - generic [ref=e96]: Sua conta de luz hoje
+          - generic [ref=e97]: R$ 850
+        - slider "Sua conta de luz hoje R$ 850" [ref=e98]: "850"
+        - generic [ref=e99]:
+          - generic [ref=e100]: R$ 100
+          - generic [ref=e101]: R$ 2.500
+          - generic [ref=e102]: R$ 5.000
+        - generic [ref=e103]:
+          - button "R$ 400" [ref=e104]
+          - button "R$ 800" [ref=e105]
+          - button "R$ 1.200" [ref=e106]
+          - button "R$ 1.800" [ref=e107]
+          - button "R$ 3.000" [ref=e108]
+        - generic [ref=e109]:
+          - paragraph [ref=e110]: Você economiza por ano
+          - generic [ref=e111]:
+            - generic [ref=e112]: R$ 1.530
+            - generic [ref=e113]: por ficar com a ESG
+          - generic [ref=e114]:
+            - link "Quero economizar 15%" [ref=e115] [cursor=pointer]:
+              - /url: /onboarding/distribuidora
+              - button "Quero economizar 15%" [ref=e116]:
+                - text: Quero economizar 15%
+                - img [ref=e117]
+            - link "Como isso funciona?" [ref=e120] [cursor=pointer]:
+              - /url: "#como-funciona"
+              - button "Como isso funciona?" [ref=e121]
+    - generic [ref=e123]:
+      - generic [ref=e124]:
+        - generic [ref=e125]:
+          - paragraph [ref=e126]: Impacto
+          - heading "Cada fatura reduz carbono na atmosfera." [level=2] [ref=e128]
+        - paragraph [ref=e130]: A transição energética começa na sua fatura.
+      - generic [ref=e133]:
+        - generic [ref=e134]:
+          - paragraph [ref=e135]: energia compartilhada
+          - heading "Uma usina solar gera para dezenas de famílias ao mesmo tempo." [level=3] [ref=e136]
+          - paragraph [ref=e137]: Você recebe os créditos proporcionais à sua cota, e a rede entrega essa energia para sua casa ou empresa.
+        - generic [ref=e138]:
+          - generic [ref=e139]:
+            - generic [ref=e140]: +12 mil
+            - generic [ref=e141]: toneladas de CO₂ evitadas
+          - generic [ref=e142]:
+            - generic [ref=e143]: "+3.400"
+            - generic [ref=e144]: clientes ativos no Brasil
+          - generic [ref=e145]:
+            - generic [ref=e146]: "14"
+            - generic [ref=e147]: usinas solares em operação
+          - generic [ref=e148]:
+            - generic [ref=e149]: R$ 8,2M
+            - generic [ref=e150]: economizados pelos nossos associados
+    - generic [ref=e152]:
+      - generic [ref=e154]:
+        - paragraph [ref=e155]: Benefícios
+        - heading "Pare de pagar caro pela sua energia." [level=2] [ref=e157]
+      - generic [ref=e158]:
+        - generic [ref=e159]:
+          - img [ref=e161]
+          - heading "Desconto garantido" [level=3] [ref=e164]
+          - paragraph [ref=e165]: 10%, 15% ou 20% OFF — o percentual não muda durante o contrato.
+        - generic [ref=e166]:
+          - img [ref=e168]
+          - heading "Adesão em 5 minutos" [level=3] [ref=e171]
+          - paragraph [ref=e172]: 100% online. Sem fila, sem burocracia, sem obras na sua casa.
+        - generic [ref=e173]:
+          - img [ref=e175]
+          - heading "Sem taxa de adesão" [level=3] [ref=e178]
+          - paragraph [ref=e179]: Entrar não custa nada. Você só paga pela energia que consumir — com desconto.
+        - generic [ref=e180]:
+          - img [ref=e182]
+          - heading "Cancelamento livre" [level=3] [ref=e185]
+          - paragraph [ref=e186]: Sem multa, sem fidelidade escondida. Cancela quando quiser.
+        - generic [ref=e187]:
+          - img [ref=e189]
+          - heading "Energia limpa" [level=3] [ref=e192]
+          - paragraph [ref=e193]: 100% renovável, gerada em usinas solares próprias no Brasil.
+        - generic [ref=e194]:
+          - img [ref=e196]
+          - heading "Regulamentado pela ANEEL" [level=3] [ref=e199]
+          - paragraph [ref=e200]: Modelo de Geração Compartilhada previsto na REN 1.000/2021.
+    - generic [ref=e202]:
+      - paragraph [ref=e203]: Perguntas frequentes
+      - heading "Tudo o que você quis perguntar." [level=2] [ref=e205]
+      - generic [ref=e206]:
+        - generic [ref=e207]:
+          - button "Preciso instalar painéis solares em casa?" [expanded] [ref=e208]:
+            - generic [ref=e209]: Preciso instalar painéis solares em casa?
+            - img [ref=e211]
+          - paragraph [ref=e215]: Não. A energia é gerada em nossas usinas solares e injetada na rede elétrica. Os créditos aparecem direto na sua fatura.
+        - button "Como funciona o desconto?" [ref=e217]:
+          - generic [ref=e218]: Como funciona o desconto?
+          - img [ref=e220]
+        - button "Posso cancelar a qualquer momento?" [ref=e222]:
+          - generic [ref=e223]: Posso cancelar a qualquer momento?
+          - img [ref=e225]
+        - button "Quanto tempo demora para começar a economizar?" [ref=e227]:
+          - generic [ref=e228]: Quanto tempo demora para começar a economizar?
+          - img [ref=e230]
+        - button "Isso é legal? É regulamentado?" [ref=e232]:
+          - generic [ref=e233]: Isso é legal? É regulamentado?
+          - img [ref=e235]
+        - button "Meu CNPJ pode aderir também?" [ref=e237]:
+          - generic [ref=e238]: Meu CNPJ pode aderir também?
+          - img [ref=e240]
+        - button "Se eu me mudar, perco o benefício?" [ref=e242]:
+          - generic [ref=e243]: Se eu me mudar, perco o benefício?
+          - img [ref=e245]
+        - button "Preciso pagar alguma taxa para começar?" [ref=e247]:
+          - generic [ref=e248]: Preciso pagar alguma taxa para começar?
+          - img [ref=e250]
+  - contentinfo [ref=e251]:
+    - generic [ref=e252]:
+      - generic [ref=e253]:
+        - generic [ref=e254]:
+          - heading "Pronto para começar a economizar?" [level=2] [ref=e255]
+          - paragraph [ref=e256]: Em 5 minutos você se associa à ESG e começa a receber o desconto na sua próxima fatura.
+          - link "Começar agora →" [ref=e257] [cursor=pointer]:
+            - /url: /onboarding/distribuidora
+        - generic [ref=e258]:
+          - generic [ref=e259]:
+            - heading "Produto" [level=3] [ref=e260]
+            - list [ref=e261]:
+              - listitem [ref=e262]:
+                - link "Como funciona" [ref=e263] [cursor=pointer]:
+                  - /url: "#como-funciona"
+              - listitem [ref=e264]:
+                - link "Calculadora" [ref=e265] [cursor=pointer]:
+                  - /url: "#calculadora"
+              - listitem [ref=e266]:
+                - link "Benefícios" [ref=e267] [cursor=pointer]:
+                  - /url: "#beneficios"
+              - listitem [ref=e268]:
+                - link "Perguntas frequentes" [ref=e269] [cursor=pointer]:
+                  - /url: "#faq"
+          - generic [ref=e270]:
+            - heading "Empresa" [level=3] [ref=e271]
+            - list [ref=e272]:
+              - listitem [ref=e273]:
+                - link "Nossas usinas" [ref=e274] [cursor=pointer]:
+                  - /url: "#impacto"
+              - listitem [ref=e275]:
+                - link "Sobre a ESG" [ref=e276] [cursor=pointer]:
+                  - /url: /sobre
+              - listitem [ref=e277]:
+                - link "Blog" [ref=e278] [cursor=pointer]:
+                  - /url: /blog
+              - listitem [ref=e279]:
+                - link "Imprensa" [ref=e280] [cursor=pointer]:
+                  - /url: /imprensa
+          - generic [ref=e281]:
+            - heading "Suporte" [level=3] [ref=e282]
+            - list [ref=e283]:
+              - listitem [ref=e284]:
+                - link "Área do cliente" [ref=e285] [cursor=pointer]:
+                  - /url: /entrar
+              - listitem [ref=e286]:
+                - link "Central de ajuda" [ref=e287] [cursor=pointer]:
+                  - /url: /ajuda
+              - listitem [ref=e288]:
+                - link "Fale conosco" [ref=e289] [cursor=pointer]:
+                  - /url: /contato
+              - listitem [ref=e290]:
+                - link "Termos & Privacidade" [ref=e291] [cursor=pointer]:
+                  - /url: /termos
+      - generic [ref=e292]:
+        - img "Energy Solar Green" [ref=e294]
+        - generic [ref=e295]:
+          - link "Instagram" [ref=e296] [cursor=pointer]:
+            - /url: https://instagram.com/energysolargreenbr
+            - img [ref=e297]
+          - link "LinkedIn" [ref=e300] [cursor=pointer]:
+            - /url: https://linkedin.com
+            - img [ref=e301]
+          - link "Email" [ref=e305] [cursor=pointer]:
+            - /url: mailto:contato@energysolargreen.com.br
+            - img [ref=e306]
+      - paragraph [ref=e309]: © 2026 Energy Solar Green · Associação de Geração Compartilhada regulamentada pela Resolução Normativa 1.000/2021 da ANEEL. Os descontos variam conforme o valor da fatura e podem ser alterados de acordo com regulamentação do setor.
+  - alert [ref=e317]

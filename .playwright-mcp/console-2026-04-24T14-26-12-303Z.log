@@ -1,0 +1,395 @@
+[     448ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[     490ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[     611ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[     618ms] [LOG] [Fast Refresh] done in 107ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[    1027ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[    1636ms] [LOG] [Fast Refresh] done in 711ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[    2236ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/api/clicksign/create:0
+[   10745ms] [LOG] %clayout-transition%c transition: width color: oklch(55% 0.25 350); font-weight: bold color: inherit JSHandle@node @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[   10746ms] [LOG] %cflat-type-hierarchy%c Sizes: 11px, 12px, 14px, 16px, 20px (ratio 1.8:1) color: oklch(55% 0.25 350); font-weight: bold color: inherit JSHandle@node @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[   10746ms] [LOG] %cpure-black-white%c Pure #000 background color: oklch(55% 0.25 350); font-weight: bold color: inherit JSHandle@node @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  366396ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  371625ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272
+[  371873ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  372268ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272
+[  372269ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/onboarding/termo?_rsc=fkgi7:0
+[  372404ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  372497ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272
+[  372573ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/onboarding/termo?_rsc=fkgi7:0
+[  372585ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:3272
+[  372653ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/onboarding/termo?_rsc=fkgi7:0
+[  372690ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  372708ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/onboarding/termo?_rsc=fkgi7:0
+[  372733ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/onboarding/termo:0
+[  373054ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_react-dom_0bruynb._.js:15305
+[  373151ms] Error: ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed
+
+
+    at <unknown> (Error: ./app/onboarding/termo/page.tsx:243:31)
+    at Object.getCompilationErrors (file:///Users/midianvc/midianvc/Claude/Sites/energy-solar-green/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///Users/midianvc/midianvc/Claude/Sites/energy-solar-green/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///Users/midianvc/midianvc/Claude/Sites/energy-solar-green/node_modules/next/dist/server/dev/next-dev-server.js:719:42)
+    at DevServer.findPageComponents (file:///Users/midianvc/midianvc/Claude/Sites/energy-solar-green/node_modules/next/dist/server/dev/next-dev-server.js:689:43)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/midianvc/midianvc/Claude/Sites/energy-solar-green/node_modules/next/dist/server/base-server.js:1745:26)
+[  373112ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  373122ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  373215ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  373316ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  373363ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  373426ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  373488ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  458903ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  458950ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  459021ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  459085ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  464647ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_client_0pe1dg-._.js:2342
+[  465650ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_client_0pe1dg-._.js:2342
+[  466651ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_client_0pe1dg-._.js:2342
+[  467653ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_client_0pe1dg-._.js:2342
+[  468656ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_client_0pe1dg-._.js:2342
+[  473670ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  473847ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/onboarding/termo:0
+[  473922ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_react-dom_0bruynb._.js:15305
+[  473940ms] Error: ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed
+
+
+    at <unknown> (Error: ./app/onboarding/termo/page.tsx:243:31)
+    at Object.getCompilationErrors (file:///Users/midianvc/midianvc/Claude/Sites/energy-solar-green/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///Users/midianvc/midianvc/Claude/Sites/energy-solar-green/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///Users/midianvc/midianvc/Claude/Sites/energy-solar-green/node_modules/next/dist/server/dev/next-dev-server.js:719:42)
+    at DevServer.findPageComponents (file:///Users/midianvc/midianvc/Claude/Sites/energy-solar-green/node_modules/next/dist/server/dev/next-dev-server.js:689:43)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/midianvc/midianvc/Claude/Sites/energy-solar-green/node_modules/next/dist/server/base-server.js:1745:26)
+[  473939ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  473940ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  473978ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  474044ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  475079ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  475155ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  475221ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  475831ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  475873ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  475937ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  476031ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  476083ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  476148ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  476237ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  476288ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  476355ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  482507ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  482512ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  482549ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  482615ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  482714ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  482771ms] [ERROR] ./app/onboarding/termo/page.tsx:243:31
+Expected '</', got 'ident'
+  241 |                 {[
+  242 |                   "Role o documento e leia o contrato completo",
+> 243 |                   "Clique em "Assinar" e confirme com CPF ou código SMS",
+      |                               ^^^^^^^
+  244 |                   "Você receberá uma cópia assinada no e-mail cadastrado",
+  245 |                 ].map((text, i) => (
+  246 |                   <li key={i} className="flex items-start gap-4">
+
+Parsing ecmascript source code failed @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1945
+[  482832ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  508841ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  510860ms] [LOG] [Fast Refresh] done in 1826ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_0u_w_5s._.js:1226
+[  511800ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  511900ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  512023ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  512281ms] [LOG] [Fast Refresh] done in 360ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  512384ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  512660ms] [LOG] [Fast Refresh] done in 377ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  514662ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/api/clicksign/create:0
+[  545393ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  545446ms] [LOG] [Fast Refresh] done in 156ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  545645ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  546061ms] [LOG] [Fast Refresh] done in 517ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  553069ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  553219ms] [LOG] [Fast Refresh] done in 251ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  557559ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  557629ms] [LOG] [Fast Refresh] done in 172ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  577222ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  577366ms] [LOG] [Fast Refresh] done in 246ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  578380ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  578449ms] [LOG] [Fast Refresh] done in 171ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  580203ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  580241ms] [LOG] [Fast Refresh] done in 139ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  589451ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  590584ms] [LOG] [Fast Refresh] done in 1235ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  591698ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  591862ms] [LOG] [Fast Refresh] done in 264ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  594844ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  594919ms] [LOG] [Fast Refresh] done in 176ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  617541ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[  617549ms] [LOG] [Fast Refresh] done in 110ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1043749ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1043974ms] [LOG] [Fast Refresh] done in 307ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1049489ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1049603ms] [LOG] [Fast Refresh] done in 155ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1051968ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/api/clicksign/create:0
+[ 1056025ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1056043ms] [LOG] [Fast Refresh] done in 106ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1063733ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1063809ms] [LOG] [Fast Refresh] done in 161ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1076700ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1076731ms] [LOG] [Fast Refresh] done in 114ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1136581ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1138057ms] [LOG] [Fast Refresh] done in 1578ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1138261ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1138289ms] [LOG] [Fast Refresh] done in 130ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1138409ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1138430ms] [LOG] [Fast Refresh] done in 122ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1138723ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1138723ms] [LOG] [Fast Refresh] done in 108ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_115brz8._.js:2431
+[ 1618239ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/api/clicksign/create:0

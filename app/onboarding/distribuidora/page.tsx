@@ -3,12 +3,10 @@
 import { useRouter } from "next/navigation";
 import { OnboardingShell } from "@/components/onboarding/OnboardingShell";
 import { OnboardingNav } from "@/components/onboarding/OnboardingNav";
-import {
-  BRAZILIAN_DISTRIBUTORS,
-  useOnboarding,
-} from "@/lib/onboarding-store";
+import { BRAZILIAN_DISTRIBUTORS, useOnboarding } from "@/lib/onboarding-store";
 import Link from "next/link";
 import { FormEvent } from "react";
+import { Check } from "lucide-react";
 
 export default function Page() {
   const router = useRouter();
@@ -21,37 +19,42 @@ export default function Page() {
 
   return (
     <OnboardingShell
-      title="A economia começa agora!"
-      description="A ESG é uma escolha limpa, inteligente e econômica para sua casa ou empresa."
+      title="Qual é sua distribuidora?"
+      description="Selecione a empresa responsável pelo fornecimento de energia elétrica no seu imóvel."
       accent="Distribuidora de energia"
     >
       <form onSubmit={onSubmit}>
-        <label
-          htmlFor="distributor"
-          className="font-label text-xs uppercase tracking-wider text-secondary-600"
+        <div
+          role="listbox"
+          aria-label="Distribuidora de energia"
+          className="overflow-y-auto rounded-xl border border-secondary-200 divide-y divide-secondary-100"
+          style={{ maxHeight: "288px" }}
         >
-          Sua distribuidora de energia
-        </label>
-        <select
-          id="distributor"
-          required
-          value={data.distributor ?? ""}
-          onChange={(e) => update({ distributor: e.target.value })}
-          className="mt-1.5 h-12 w-full rounded-xl bg-tertiary border border-secondary-200 px-4 font-label text-[0.95rem] text-secondary-900 focus:outline-none focus:border-secondary-700 focus:ring-2 focus:ring-secondary-900/10"
-        >
-          <option value="" disabled>
-            Selecione sua distribuidora
-          </option>
-          {BRAZILIAN_DISTRIBUTORS.map((d) => (
-            <option key={d} value={d}>
-              {d}
-            </option>
-          ))}
-        </select>
+          {BRAZILIAN_DISTRIBUTORS.map((d) => {
+            const selected = data.distributor === d;
+            return (
+              <button
+                key={d}
+                type="button"
+                role="option"
+                aria-selected={selected}
+                onClick={() => update({ distributor: d })}
+                className={`w-full flex items-center justify-between px-4 py-3 text-left transition-colors btn-press ${
+                  selected
+                    ? "bg-secondary-900 text-tertiary"
+                    : "bg-tertiary text-secondary-800 hover:bg-secondary-100"
+                }`}
+              >
+                <span className="font-label text-sm">{d}</span>
+                {selected && <Check size={15} className="shrink-0 text-primary" />}
+              </button>
+            );
+          })}
+        </div>
 
         <Link
           href="/entrar"
-          className="mt-6 block text-center font-label text-sm text-secondary-700 underline underline-offset-4 hover:text-secondary-900"
+          className="mt-5 block text-center font-label text-sm text-secondary-500 underline underline-offset-4 hover:text-secondary-900"
         >
           Já iniciei meu cadastro
         </Link>

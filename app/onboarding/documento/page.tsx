@@ -38,8 +38,8 @@ export default function Page() {
 
   return (
     <OnboardingShell
-      title="Dados do titular"
-      description="Preencha os dados do titular da conta de luz."
+      title="Documento de identificação"
+      description="Informe o CPF ou CNPJ do titular da conta de luz."
       accent="Identificação"
     >
       <form onSubmit={onSubmit}>

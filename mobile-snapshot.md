@@ -1,0 +1,14 @@
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]
+    - navigation [ref=e323]
+  - main [ref=e17]:
+    - generic [ref=e22]
+    - generic [ref=e36]
+    - generic [ref=e87]
+    - generic [ref=e123]
+    - generic [ref=e152]
+    - generic [ref=e202]
+  - contentinfo [ref=e251]:
+    - generic [ref=e252]
+  - alert [ref=e317]

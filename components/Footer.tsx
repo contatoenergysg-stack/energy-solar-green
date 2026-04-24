@@ -63,8 +63,8 @@ export function Footer() {
               </span>
             </h2>
             <p className="footer-cta-sub mt-5 font-body text-tertiary/70 max-w-sm leading-relaxed">
-              Em 5 minutos você se associa à ESG e começa a receber o desconto
-              na sua próxima fatura.
+              Em 5 minutos você se associa à ESG. Ativação pela distribuidora
+              em 30–60 dias, depois o desconto aparece direto na sua fatura.
             </p>
             <Link
               href="/onboarding/distribuidora"
@@ -134,8 +134,16 @@ export function Footer() {
 
         <p className="footer-bottom mt-10 font-label text-xs text-tertiary/50 max-w-3xl leading-relaxed">
           © {new Date().getFullYear()} Energy Solar Green · Associação de Geração
-          Compartilhada regulamentada pela Resolução Normativa 1.000/2021 da ANEEL.
-          Os descontos variam conforme o valor da fatura e podem ser alterados
+          Compartilhada regulamentada pela{" "}
+          <a
+            href="https://www.aneel.gov.br/resolucoes-normativas/-/asset_publisher/ukrBQHpIrPHM/content/rn-n-1000-2021/656877"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2 hover:text-primary transition-colors"
+          >
+            Resolução Normativa 1.000/2021 da ANEEL
+          </a>
+          .{" "}Os descontos variam conforme o valor da fatura e podem ser alterados
           de acordo com regulamentação do setor.
         </p>
       </div>

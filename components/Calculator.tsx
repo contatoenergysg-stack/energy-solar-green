@@ -95,6 +95,14 @@ export function Calculator() {
                 <span>R$ 5.000</span>
               </div>
 
+              {/* Coverage note */}
+              <p className="mt-5 font-label text-[11px] text-secondary-500 leading-relaxed">
+                Disponível para clientes de:{" "}
+                <span className="text-secondary-700">
+                  Light · Enel SP · Enel RJ · Enel CE · Cemig · Copel · CPFL · Energisa · e mais
+                </span>
+              </p>
+
               {/* Quick chips */}
               <div className="mt-6 flex flex-wrap gap-2">
                 {[400, 800, 1200, 1800, 3000].map((v) => (
@@ -130,13 +138,13 @@ export function Calculator() {
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Link href="/onboarding/distribuidora">
                     <Button size="lg">
-                      Quero economizar {(pct * 100).toFixed(0)}%
+                      Começar agora
                       <ArrowUpRight size={18} />
                     </Button>
                   </Link>
                   <Link href="#como-funciona">
                     <Button size="lg" variant="ghost">
-                      Como isso funciona?
+                      Saiba mais
                     </Button>
                   </Link>
                 </div>

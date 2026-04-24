@@ -6,7 +6,14 @@ import { motion } from "framer-motion";
 import { Button } from "./ui/Button";
 import { ArrowUpRight } from "lucide-react";
 
-const HeroGlobe = dynamic(() => import("./HeroGlobe"), { ssr: false });
+const HeroGlobe = dynamic(() => import("./HeroGlobe"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full aspect-square max-w-[600px] mx-auto flex items-center justify-center">
+      <div className="w-[min(480px,90vw)] h-[min(480px,90vw)] rounded-full bg-secondary-200/40 animate-pulse" />
+    </div>
+  ),
+});
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -78,7 +85,7 @@ export function Hero() {
                 </Link>
                 <Link href="#calculadora">
                   <Button size="lg" variant="outline">
-                    Calcular minha economia
+                    Saiba mais
                   </Button>
                 </Link>
               </motion.div>

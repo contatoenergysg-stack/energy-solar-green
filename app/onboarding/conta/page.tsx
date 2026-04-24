@@ -6,21 +6,63 @@ import { OnboardingNav } from "@/components/onboarding/OnboardingNav";
 import { useOnboarding } from "@/lib/onboarding-store";
 import { useDropzone } from "react-dropzone";
 import { FormEvent, useState } from "react";
-import { Upload, File as FileIcon, Eye, EyeOff, X } from "lucide-react";
+import { Upload, File as FileIcon, Eye, EyeOff, X, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import type { ParsedBill } from "@/lib/parsers/bill";
+
+type ParseState = "idle" | "parsing" | "done" | "error";
 
 export default function Page() {
   const router = useRouter();
   const { data, update } = useOnboarding();
   const [showPwd, setShowPwd] = useState(false);
+  const [showPwdField, setShowPwdField] = useState(false);
+  const [parseState, setParseState] = useState<ParseState>("idle");
+  const [parseError, setParseError] = useState<string | null>(null);
+  const [parsed, setParsed] = useState<ParsedBill | null>(null);
 
-  const isValid = !!data.billFileName;
+  const isValid = !!data.billFileName && (parseState === "done" || parseState === "error");
+
+  async function parseBill(file: File) {
+    setParseState("parsing");
+    setParseError(null);
+    setParsed(null);
+
+    try {
+      const form = new FormData();
+      form.append("file", file);
+
+      const res = await fetch("/api/parse-bill", { method: "POST", body: form });
+      const json = await res.json();
+
+      if (!res.ok || json.error) throw new Error(json.error ?? "Erro ao processar");
+
+      const result = json as ParsedBill;
+      setParsed(result);
+      setParseState("done");
+
+      // Store extracted data in onboarding state
+      update({
+        avgMonthlyKwh: result.avgMonthlyKwh,
+        kwhTariff: result.kwhTariff,
+        consumptionHistory: result.consumptionHistory,
+        monthlyBill: result.monthlyBill,
+        ...(result.installationNumber ? { installationNumber: result.installationNumber } : {}),
+        ...(result.address ? { address: result.address } : {}),
+      });
+    } catch (err) {
+      setParseError(String(err instanceof Error ? err.message : err));
+      setParseState("error");
+    }
+  }
 
   const mainDrop = useDropzone({
-    accept: { "application/pdf": [".pdf"], "image/*": [".png", ".jpg", ".jpeg"] },
+    accept: { "application/pdf": [".pdf"] },
     maxFiles: 1,
     onDrop: (files) => {
       const f = files[0];
-      if (f) update({ billFileName: f.name, billFileSize: f.size });
+      if (!f) return;
+      update({ billFileName: f.name, billFileSize: f.size });
+      parseBill(f);
     },
   });
 
@@ -34,17 +76,21 @@ export default function Page() {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (isValid) {
-      // Simulate extracting the monthly bill from the upload
-      const simulated = data.monthlyBill || 850;
-      update({
-        monthlyBill: simulated,
-        installationNumber: data.installationNumber || "2.137.992.059-42",
-        address: data.address || "Av. Mons. Felix 196, Irajá, Rio de Janeiro/RJ",
-      });
-      router.push("/onboarding/confirmacao");
-    }
+    if (isValid) router.push("/onboarding/confirmacao");
   };
+
+  function removeBill() {
+    update({
+      billFileName: null,
+      billFileSize: null,
+      avgMonthlyKwh: 0,
+      kwhTariff: 0,
+      consumptionHistory: [],
+    });
+    setParseState("idle");
+    setParseError(null);
+    setParsed(null);
+  }
 
   return (
     <OnboardingShell
@@ -59,107 +105,160 @@ export default function Page() {
             Conta de Energia
           </p>
           <p className="font-label text-xs text-secondary-600 mt-1">
-            Adicione um arquivo em PDF ou imagem (PNG ou JPG)
+            Adicione o PDF da sua conta de luz — extrairemos os dados automaticamente.
           </p>
 
           {data.billFileName ? (
-            <div className="mt-4 flex items-center gap-3 bg-primary/15 rounded-xl p-3">
-              <FileIcon size={20} className="text-secondary-900" />
-              <div className="flex-1 min-w-0">
-                <p className="font-label text-sm text-secondary-900 truncate">
-                  {data.billFileName}
-                </p>
-                {data.billFileSize && (
-                  <p className="font-label text-xs text-secondary-600">
-                    {(data.billFileSize / 1024).toFixed(0)} KB
+            <div className="mt-4 space-y-3">
+              {/* File row */}
+              <div className="flex items-center gap-3 bg-primary/15 rounded-xl p-3">
+                <FileIcon size={20} className="text-secondary-900 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <p className="font-label text-sm text-secondary-900 truncate">
+                    {data.billFileName}
                   </p>
+                  {data.billFileSize && (
+                    <p className="font-label text-xs text-secondary-600">
+                      {(data.billFileSize / 1024).toFixed(0)} KB
+                    </p>
+                  )}
+                </div>
+                {parseState === "parsing" && (
+                  <Loader2 size={16} className="animate-spin text-secondary-500 shrink-0" />
                 )}
+                {parseState === "done" && (
+                  <CheckCircle2 size={16} className="text-secondary-700 shrink-0" />
+                )}
+                {parseState === "error" && (
+                  <AlertCircle size={16} className="text-red-500 shrink-0" />
+                )}
+                <button
+                  type="button"
+                  onClick={removeBill}
+                  aria-label="Remover"
+                  className="p-1 rounded-full hover:bg-secondary-900/10 shrink-0"
+                >
+                  <X size={18} />
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={() =>
-                  update({ billFileName: null, billFileSize: null })
-                }
-                aria-label="Remover"
-                className="p-1 rounded-full hover:bg-secondary-900/10"
-              >
-                <X size={18} />
-              </button>
+
+              {/* Parse feedback */}
+              {parseState === "parsing" && (
+                <p className="font-label text-xs text-secondary-500 flex items-center gap-2 px-1">
+                  <Loader2 size={11} className="animate-spin" />
+                  Extraindo consumo e tarifa…
+                </p>
+              )}
+
+              {parseState === "error" && (
+                <p className="font-label text-xs text-red-600 px-1">
+                  {parseError} — verifique se é um PDF de conta de luz e tente novamente.
+                </p>
+              )}
+
+              {parseState === "done" && parsed && (
+                <div className="rounded-xl bg-secondary-900 px-4 py-3 grid grid-cols-3 gap-3">
+                  <Stat
+                    label="Consumo médio"
+                    value={`${parsed.avgMonthlyKwh.toLocaleString("pt-BR")} kWh`}
+                  />
+                  <Stat
+                    label="Tarifa unitária"
+                    value={`R$ ${parsed.kwhTariff.toFixed(5)}`}
+                  />
+                  <Stat
+                    label="Distribuidora"
+                    value={parsed.distributor.charAt(0).toUpperCase() + parsed.distributor.slice(1)}
+                  />
+                </div>
+              )}
             </div>
           ) : (
             <div
               {...mainDrop.getRootProps()}
               className={`mt-4 border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-colors ${
                 mainDrop.isDragActive
-                  ? "border-primary-700 bg-primary/10"
+                  ? "border-primary bg-primary/10"
                   : "border-secondary-200 hover:border-secondary-400"
               }`}
             >
               <input {...mainDrop.getInputProps()} />
               <Upload size={24} className="mx-auto text-secondary-600 mb-2" />
               <p className="font-label text-sm text-secondary-700">
-                <span className="text-secondary-900 font-medium">
-                  Procure o arquivo
-                </span>{" "}
+                <span className="text-secondary-900 font-medium">Procure o arquivo</span>{" "}
                 ou arraste aqui
               </p>
+              <p className="font-label text-[11px] text-secondary-400 mt-1">PDF · Light, Enel, Cemig e outras</p>
             </div>
           )}
 
-          <div className="mt-4 relative">
-            <input
-              type={showPwd ? "text" : "password"}
-              placeholder="Senha do arquivo (opcional)"
-              value={data.billPassword}
-              onChange={(e) => update({ billPassword: e.target.value })}
-              className="h-12 w-full rounded-xl bg-tertiary border border-secondary-200 px-4 pr-11 font-label text-sm text-secondary-900 focus:outline-none focus:border-secondary-700"
-            />
+          {!showPwdField ? (
             <button
               type="button"
-              onClick={() => setShowPwd((s) => !s)}
-              aria-label={showPwd ? "Esconder senha" : "Mostrar senha"}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary-600"
+              onClick={() => setShowPwdField(true)}
+              className="mt-3 font-label text-xs text-secondary-500 underline underline-offset-2 hover:text-secondary-700 transition-colors"
             >
-              {showPwd ? <EyeOff size={18} /> : <Eye size={18} />}
+              Arquivo protegido por senha?
             </button>
-          </div>
+          ) : (
+            <div className="mt-3 relative">
+              <input
+                type={showPwd ? "text" : "password"}
+                placeholder="Senha do arquivo"
+                value={data.billPassword}
+                onChange={(e) => update({ billPassword: e.target.value })}
+                className="h-11 w-full rounded-xl bg-tertiary border border-secondary-200 px-4 pr-11 font-label text-sm text-secondary-900 focus:outline-none focus:border-secondary-700"
+                autoFocus
+              />
+              <button
+                type="button"
+                onClick={() => setShowPwd((s) => !s)}
+                aria-label={showPwd ? "Esconder senha" : "Mostrar senha"}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary-500"
+              >
+                {showPwd ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+          )}
         </div>
 
-        {/* Documentos Complementares */}
-        <div className="rounded-2xl border border-secondary-200 bg-tertiary p-5">
-          <p className="font-display text-base font-semibold text-secondary-900">
-            Documentos complementares
-          </p>
-          <p className="font-label text-xs text-secondary-600 mt-1">
+        {/* Documentos Complementares — optional, visually subordinate */}
+        <div className="rounded-xl border border-dashed border-secondary-200 px-4 py-4">
+          <div className="flex items-center gap-2 mb-1">
+            <p className="font-label text-sm font-medium text-secondary-700">
+              Documentos complementares
+            </p>
+            <span className="font-label text-[10px] uppercase tracking-wider text-secondary-400 bg-secondary-100 px-2 py-0.5 rounded-full">
+              Opcional
+            </span>
+          </div>
+          <p className="font-label text-xs text-secondary-400 mb-3">
             Ex.: protocolo de troca de titularidade, procurações, contratos sociais.
           </p>
 
           {data.complementaryDocName ? (
-            <div className="mt-4 flex items-center gap-3 bg-primary/15 rounded-xl p-3">
-              <FileIcon size={20} className="text-secondary-900" />
-              <span className="font-label text-sm text-secondary-900 truncate flex-1">
+            <div className="flex items-center gap-3 bg-secondary-100/60 rounded-lg p-2.5">
+              <FileIcon size={16} className="text-secondary-600 shrink-0" />
+              <span className="font-label text-xs text-secondary-700 truncate flex-1">
                 {data.complementaryDocName}
               </span>
               <button
                 type="button"
                 onClick={() => update({ complementaryDocName: null })}
                 aria-label="Remover"
-                className="p-1 rounded-full hover:bg-secondary-900/10"
+                className="p-1 rounded-full hover:bg-secondary-200"
               >
-                <X size={18} />
+                <X size={14} className="text-secondary-500" />
               </button>
             </div>
           ) : (
             <div
               {...complementary.getRootProps()}
-              className="mt-4 border-2 border-dashed border-secondary-200 rounded-xl p-4 text-center cursor-pointer hover:border-secondary-400 transition-colors"
+              className="border border-dashed border-secondary-200 rounded-lg p-3 text-center cursor-pointer hover:border-secondary-400 transition-colors"
             >
               <input {...complementary.getInputProps()} />
-              <p className="font-label text-sm text-secondary-700">
-                <span className="text-secondary-900 font-medium">
-                  Procure o arquivo
-                </span>{" "}
-                ou arraste aqui
+              <p className="font-label text-xs text-secondary-500">
+                <span className="text-secondary-700">Procure o arquivo</span> ou arraste aqui
               </p>
             </div>
           )}
@@ -168,5 +267,18 @@ export default function Page() {
         <OnboardingNav backHref="/onboarding/titular" nextDisabled={!isValid} />
       </form>
     </OnboardingShell>
+  );
+}
+
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <p className="font-label text-[10px] uppercase tracking-[0.18em] text-tertiary/50 mb-0.5">
+        {label}
+      </p>
+      <p className="font-display text-sm font-semibold text-tertiary tabular-nums">
+        {value}
+      </p>
+    </div>
   );
 }

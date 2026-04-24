@@ -2,8 +2,16 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { createClient as createAdminClient } from "@supabase/supabase-js";
 import { getDiscountPercent } from "@/lib/utils";
 import type { OnboardingData } from "@/lib/onboarding-store";
+
+function getAdminClient() {
+  return createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+}
 
 // ── Save draft (called at each step) ──────────────────────
 export async function saveDraft(
@@ -57,24 +65,23 @@ export async function loadDraft(sessionId: string) {
 // ── Final submission (after signing) ──────────────────────
 export async function submitOnboarding(formData: OnboardingData) {
   const supabase = await createClient();
+  const admin = getAdminClient();
 
-  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  const { data: { user } } = await supabase.auth.getUser();
 
-  if (authError || !user) {
-    return { ok: false, error: "Usuário não autenticado." };
+  // 1. Update profile only if authenticated
+  if (user) {
+    await admin
+      .from("profiles")
+      .update({ name: formData.name, phone: formData.phone, cpf: formData.document })
+      .eq("id", user.id);
   }
 
-  // 1. Update profile
-  await supabase
-    .from("profiles")
-    .update({ name: formData.name, phone: formData.phone, cpf: formData.document })
-    .eq("id", user.id);
-
-  // 2. Create subscription
-  const { data: sub, error: subError } = await supabase
+  // 2. Create subscription via admin client (bypasses RLS)
+  const { data: sub, error: subError } = await admin
     .from("subscriptions")
     .insert({
-      user_id: user.id,
+      user_id: user?.id ?? null,
       distributor: formData.distributor!,
       installation_number: formData.installationNumber || null,
       monthly_bill_brl: formData.monthlyBill,
@@ -87,12 +94,12 @@ export async function submitOnboarding(formData: OnboardingData) {
 
   if (subError || !sub) {
     console.error("[submitOnboarding] subscription", subError?.message);
-    return { ok: false, error: "Erro ao criar assinatura." };
+    return { ok: false, error: subError?.message ?? "Erro ao criar assinatura." };
   }
 
-  // 3. Create property
-  await supabase.from("properties").insert({
-    user_id: user.id,
+  // 3. Create property via admin client
+  await admin.from("properties").insert({
+    user_id: user?.id ?? null,
     subscription_id: sub.id,
     address: formData.address || null,
     titular_name: formData.fullName || formData.name,

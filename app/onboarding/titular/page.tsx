@@ -32,8 +32,8 @@ export default function Page() {
 
   return (
     <OnboardingShell
-      title="Dados do titular"
-      description="Continue preenchendo os dados do titular da conta de luz."
+      title="Dados do titular da conta"
+      description="Preencha os dados do titular registrado na distribuidora de energia."
       accent="Identificação"
     >
       <form onSubmit={onSubmit} className="space-y-4">
@@ -46,13 +46,18 @@ export default function Page() {
           </span>
         </div>
 
-        <Input
-          label="Nome completo"
-          placeholder="Nome do titular"
-          value={data.fullName}
-          onChange={(e) => update({ fullName: e.target.value })}
-          required
-        />
+        <div>
+          <Input
+            label="Nome do titular"
+            placeholder="Nome conforme registrado na distribuidora"
+            value={data.fullName || data.name}
+            onChange={(e) => update({ fullName: e.target.value })}
+            required
+          />
+          <p className="mt-1.5 font-label text-[11px] text-secondary-500">
+            Nome registrado na distribuidora — pode ser diferente do contato.
+          </p>
+        </div>
 
         <div className="flex flex-col gap-1.5">
           <label

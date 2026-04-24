@@ -1,0 +1,21 @@
+- generic [active] [ref=e1]:
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - link "Home" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - img "Energy Solar Green" [ref=e7]
+        - generic [ref=e9]:
+          - generic [ref=e10]: Passo 9 de 9
+          - generic [ref=e13]: Contrato
+        - link "Sair" [ref=e14] [cursor=pointer]:
+          - /url: /
+      - generic [ref=e16]:
+        - img [ref=e21]
+        - generic [ref=e23]:
+          - paragraph [ref=e24]: Preparando seu contrato
+          - paragraph [ref=e25]:
+            - text: Preenchendo o termo com seus dados cadastrais.
+            - text: Isso leva alguns segundos.
+  - button "Open Next.js Dev Tools" [ref=e35] [cursor=pointer]:
+    - img [ref=e36]
