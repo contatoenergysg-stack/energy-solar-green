@@ -2,8 +2,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { parseBillText } from "@/lib/parsers/bill";
-import { pathToFileURL } from "url";
-import { resolve } from "path";
+import { PDFParse } from "pdf-parse";
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,23 +14,10 @@ export async function POST(req: NextRequest) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-
-    const pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs");
-    const workerPath = resolve("node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs");
-    pdfjs.GlobalWorkerOptions.workerSrc = pathToFileURL(workerPath).href;
-
-    const loadingTask = pdfjs.getDocument({ data: new Uint8Array(buffer) });
-    const doc = await loadingTask.promise;
-
-    let text = "";
-    for (let i = 1; i <= doc.numPages; i++) {
-      const page = await doc.getPage(i);
-      const content = await page.getTextContent();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const pageText = content.items.map((item: any) => item.str ?? "").join(" ");
-      text += pageText + "\n";
-    }
-    await doc.destroy();
+    const parser = new PDFParse({ data: new Uint8Array(buffer) });
+    const textResult = await parser.getText();
+    const text = textResult.text;
+    await parser.destroy();
 
     const result = parseBillText(text);
 
