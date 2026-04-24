@@ -103,23 +103,6 @@ export function Calculator() {
                 </span>
               </p>
 
-              {/* Quick chips */}
-              <div className="mt-6 flex flex-wrap gap-2">
-                {[400, 800, 1200, 1800, 3000].map((v) => (
-                  <button
-                    key={v}
-                    type="button"
-                    onClick={() => setBill(v)}
-                    className={`font-label text-sm px-4 py-2 rounded-full border btn-press transition-colors duration-200 ${
-                      bill === v
-                        ? "bg-secondary-900 text-tertiary border-secondary-900"
-                        : "bg-tertiary text-secondary-700 border-secondary-200 hover:border-secondary-400"
-                    }`}
-                  >
-                    {formatCurrency(v)}
-                  </button>
-                ))}
-              </div>
 
               {/* Result */}
               <div className="mt-8 pt-8 border-t border-secondary-200">
