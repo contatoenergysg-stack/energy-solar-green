@@ -2,7 +2,7 @@
 
 // Extracts text from a PDF file entirely in the browser.
 // pdfjs-dist works in the browser where DOMMatrix and Canvas APIs are available.
-export async function extractPdfText(file: File): Promise<string> {
+export async function extractPdfText(file: File, password?: string): Promise<string> {
   const pdfjs = await import("pdfjs-dist");
 
   if (!pdfjs.GlobalWorkerOptions.workerSrc) {
@@ -10,7 +10,10 @@ export async function extractPdfText(file: File): Promise<string> {
   }
 
   const buffer = await file.arrayBuffer();
-  const loadingTask = pdfjs.getDocument({ data: new Uint8Array(buffer) });
+  const loadingTask = pdfjs.getDocument({
+    data: new Uint8Array(buffer),
+    ...(password ? { password } : {}),
+  });
   const doc = await loadingTask.promise;
 
   let text = "";

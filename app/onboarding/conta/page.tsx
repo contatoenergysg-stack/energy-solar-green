@@ -5,7 +5,7 @@ import { OnboardingShell } from "@/components/onboarding/OnboardingShell";
 import { OnboardingNav } from "@/components/onboarding/OnboardingNav";
 import { useOnboarding } from "@/lib/onboarding-store";
 import { useDropzone } from "react-dropzone";
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { Upload, File as FileIcon, Eye, EyeOff, X, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import type { ParsedBill } from "@/lib/parsers/bill";
 import { parseBillText } from "@/lib/parsers/bill";
@@ -21,16 +21,21 @@ export default function Page() {
   const [parseState, setParseState] = useState<ParseState>("idle");
   const [parseError, setParseError] = useState<string | null>(null);
   const [parsed, setParsed] = useState<ParsedBill | null>(null);
+  const fileRef = useRef<File | null>(null);
 
-  const isValid = !!data.billFileName && (parseState === "done" || parseState === "error");
+  const isValid = !!data.billFileName && parseState === "done";
+  const isPasswordError = parseState === "error" && (
+    parseError?.toLowerCase().includes("password") ||
+    parseError?.toLowerCase().includes("encrypted")
+  );
 
-  async function parseBill(file: File) {
+  async function parseBill(file: File, password?: string) {
     setParseState("parsing");
     setParseError(null);
     setParsed(null);
 
     try {
-      const text = await extractPdfText(file);
+      const text = await extractPdfText(file, password);
       const result = parseBillText(text);
 
       if (!result) {
@@ -60,6 +65,7 @@ export default function Page() {
     onDrop: (files) => {
       const f = files[0];
       if (!f) return;
+      fileRef.current = f;
       update({ billFileName: f.name, billFileSize: f.size });
       parseBill(f);
     },
@@ -79,16 +85,25 @@ export default function Page() {
   };
 
   function removeBill() {
+    fileRef.current = null;
     update({
       billFileName: null,
       billFileSize: null,
       avgMonthlyKwh: 0,
       kwhTariff: 0,
       consumptionHistory: [],
+      billPassword: "",
     });
     setParseState("idle");
     setParseError(null);
     setParsed(null);
+    setShowPwdField(false);
+  }
+
+  function retryWithPassword() {
+    if (fileRef.current && data.billPassword) {
+      parseBill(fileRef.current, data.billPassword);
+    }
   }
 
   return (
@@ -150,9 +165,22 @@ export default function Page() {
               )}
 
               {parseState === "error" && (
-                <p className="font-label text-xs text-red-600 px-1">
-                  {parseError} — verifique se é um PDF de conta de luz e tente novamente.
-                </p>
+                <div className="space-y-2 px-1">
+                  <p className="font-label text-xs text-red-600">
+                    {isPasswordError
+                      ? "Este PDF está protegido por senha."
+                      : `${parseError} — verifique se é um PDF de conta de luz e tente novamente.`}
+                  </p>
+                  {isPasswordError && !showPwdField && (
+                    <button
+                      type="button"
+                      onClick={() => setShowPwdField(true)}
+                      className="font-label text-xs text-secondary-700 underline underline-offset-2 hover:text-secondary-900 transition-colors"
+                    >
+                      Inserir senha do arquivo
+                    </button>
+                  )}
+                </div>
               )}
 
               {parseState === "done" && parsed && (
@@ -200,23 +228,38 @@ export default function Page() {
               Arquivo protegido por senha?
             </button>
           ) : (
-            <div className="mt-3 relative">
-              <input
-                type={showPwd ? "text" : "password"}
-                placeholder="Senha do arquivo"
-                value={data.billPassword}
-                onChange={(e) => update({ billPassword: e.target.value })}
-                className="h-11 w-full rounded-xl bg-tertiary border border-secondary-200 px-4 pr-11 font-label text-sm text-secondary-900 focus:outline-none focus:border-secondary-700"
-                autoFocus
-              />
-              <button
-                type="button"
-                onClick={() => setShowPwd((s) => !s)}
-                aria-label={showPwd ? "Esconder senha" : "Mostrar senha"}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary-500"
-              >
-                {showPwd ? <EyeOff size={16} /> : <Eye size={16} />}
-              </button>
+            <div className="mt-3 space-y-2">
+              <div className="relative">
+                <input
+                  type={showPwd ? "text" : "password"}
+                  placeholder="Senha do arquivo"
+                  value={data.billPassword}
+                  onChange={(e) => update({ billPassword: e.target.value })}
+                  onKeyDown={(e) => e.key === "Enter" && retryWithPassword()}
+                  className="h-11 w-full rounded-xl bg-tertiary border border-secondary-200 px-4 pr-11 font-label text-sm text-secondary-900 focus:outline-none focus:border-secondary-700"
+                  autoFocus
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPwd((s) => !s)}
+                  aria-label={showPwd ? "Esconder senha" : "Mostrar senha"}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary-500"
+                >
+                  {showPwd ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              </div>
+              {parseState === "error" && data.billPassword && (
+                <button
+                  type="button"
+                  onClick={retryWithPassword}
+                  className="w-full h-10 rounded-xl bg-secondary-900 text-tertiary font-label text-sm font-medium hover:bg-secondary-800 transition-colors flex items-center justify-center gap-2"
+                >
+                  {parseState === "parsing" ? (
+                    <Loader2 size={14} className="animate-spin" />
+                  ) : null}
+                  Processar com essa senha
+                </button>
+              )}
             </div>
           )}
         </div>
