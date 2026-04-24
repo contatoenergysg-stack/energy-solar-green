@@ -8,6 +8,8 @@ import { useDropzone } from "react-dropzone";
 import { FormEvent, useState } from "react";
 import { Upload, File as FileIcon, Eye, EyeOff, X, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import type { ParsedBill } from "@/lib/parsers/bill";
+import { parseBillText } from "@/lib/parsers/bill";
+import { extractPdfText } from "@/lib/parsers/extract-pdf-text";
 
 type ParseState = "idle" | "parsing" | "done" | "error";
 
@@ -28,19 +30,16 @@ export default function Page() {
     setParsed(null);
 
     try {
-      const form = new FormData();
-      form.append("file", file);
+      const text = await extractPdfText(file);
+      const result = parseBillText(text);
 
-      const res = await fetch("/api/parse-bill", { method: "POST", body: form });
-      const json = await res.json();
+      if (!result) {
+        throw new Error("Não foi possível extrair os dados da conta. Verifique se é um PDF de conta de energia.");
+      }
 
-      if (!res.ok || json.error) throw new Error(json.error ?? "Erro ao processar");
-
-      const result = json as ParsedBill;
       setParsed(result);
       setParseState("done");
 
-      // Store extracted data in onboarding state
       update({
         avgMonthlyKwh: result.avgMonthlyKwh,
         kwhTariff: result.kwhTariff,
