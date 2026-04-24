@@ -83,9 +83,11 @@ export async function POST(req: NextRequest) {
       widgetUrl: widgetUrl(list),
     });
   } catch (err) {
-    console.error("[clicksign/create]", err);
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[clicksign/create] ERRO DETALHADO:", msg);
+    console.error("[clicksign/create] STACK:", err instanceof Error ? err.stack : "");
     return NextResponse.json(
-      { error: String(err instanceof Error ? err.message : err) },
+      { error: msg },
       { status: 500 }
     );
   }
