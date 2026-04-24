@@ -1,7 +1,4 @@
-const BASE =
-  process.env.NODE_ENV === "production"
-    ? "https://app.clicksign.com"
-    : "https://sandbox.clicksign.com";
+const BASE = "https://sandbox.clicksign.com";
 
 function endpoint(path: string) {
   return `${BASE}/api/v1${path}?access_token=${process.env.CLICKSIGN_API_KEY}`;
