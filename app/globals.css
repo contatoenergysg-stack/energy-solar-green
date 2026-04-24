@@ -162,6 +162,91 @@ body {
   }
 }
 
+/* ── Range slider customizado ── */
+@layer base {
+  .range-slider {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(
+      to right,
+      var(--color-primary) var(--slider-pct, 17%),
+      var(--color-secondary-200) var(--slider-pct, 17%)
+    ) !important;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .range-slider::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 2px;
+  }
+
+  .range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--color-primary) !important;
+    cursor: grab;
+    margin-top: -8px;
+    box-shadow: 0 1px 6px oklch(0.905 0.215 118 / 0.35);
+    transition: transform 160ms var(--ease-out-strong), box-shadow 160ms var(--ease-out-strong);
+  }
+
+  .range-slider:active::-webkit-slider-thumb {
+    cursor: grabbing;
+    transform: scale(1.2);
+    box-shadow: 0 2px 14px oklch(0.905 0.215 118 / 0.55);
+  }
+
+  .range-slider::-moz-range-track {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--color-secondary-200);
+  }
+
+  .range-slider::-moz-range-progress {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--color-primary);
+  }
+
+  .range-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 50%;
+    background: var(--color-primary) !important;
+    cursor: grab;
+    box-shadow: 0 1px 6px oklch(0.905 0.215 118 / 0.35);
+  }
+
+  /* Thumb maior no mobile — área de toque mais fácil */
+  @media (max-width: 1023px) {
+    .range-slider::-webkit-slider-thumb {
+      width: 32px;
+      height: 32px;
+      margin-top: -14px;
+      box-shadow: 0 2px 10px oklch(0.905 0.215 118 / 0.4);
+    }
+
+    .range-slider:active::-webkit-slider-thumb {
+      transform: scale(1.15);
+      box-shadow: 0 4px 18px oklch(0.905 0.215 118 / 0.55);
+    }
+
+    .range-slider::-moz-range-thumb {
+      width: 32px;
+      height: 32px;
+      box-shadow: 0 2px 10px oklch(0.905 0.215 118 / 0.4);
+    }
+  }
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: var(--color-tertiary); }

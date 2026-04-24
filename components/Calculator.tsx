@@ -5,13 +5,17 @@ import { useMemo, useState, useEffect } from "react";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { Button } from "./ui/Button";
 import { calculateSavings, formatCurrency, getDiscountPercent } from "@/lib/utils";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
+
+const MIN = 100;
+const MAX = 5000;
 
 export function Calculator() {
   const [bill, setBill] = useState<number>(850);
 
   const savings = useMemo(() => calculateSavings(bill), [bill]);
   const pct = getDiscountPercent(bill);
+  const sliderPct = `${((bill - MIN) / (MAX - MIN)) * 100}%`;
 
   /* Animated counter for annual savings */
   const mv = useMotionValue(savings.annual);
@@ -77,16 +81,17 @@ export function Calculator() {
               <input
                 id="bill-range"
                 type="range"
-                min={100}
-                max={5000}
+                min={MIN}
+                max={MAX}
                 step={25}
                 value={bill}
                 onChange={(e) => setBill(Number(e.target.value))}
-                className="mt-4 w-full accent-[var(--color-primary)]"
-                style={{ accentColor: "var(--color-primary)" }}
-                aria-valuemin={100}
-                aria-valuemax={5000}
+                className="mt-5 w-full range-slider"
+                style={{ "--slider-pct": sliderPct } as React.CSSProperties}
+                aria-valuemin={MIN}
+                aria-valuemax={MAX}
                 aria-valuenow={bill}
+                aria-label="Valor da sua conta de luz"
               />
 
               <div className="mt-2 flex justify-between font-label text-[11px] text-secondary-500">
@@ -127,7 +132,8 @@ export function Calculator() {
                   </Link>
                   <Link href="#como-funciona">
                     <Button size="lg" variant="ghost">
-                      Saiba mais
+                      Como funciona
+                      <ChevronDown size={16} />
                     </Button>
                   </Link>
                 </div>

@@ -42,7 +42,7 @@ export function Hero() {
               animate="show"
               className="flex flex-col"
             >
-              <motion.h1
+<motion.h1
                 variants={fadeUp}
                 className="font-display font-bold text-secondary-900 leading-[1.02]"
                 style={{ fontSize: headlineSize, letterSpacing: "-0.035em" }}
@@ -93,8 +93,10 @@ export function Hero() {
           </div>
 
           {/* RIGHT — 3D globe */}
-          <div className="w-full lg:w-1/2">
-            <HeroGlobe />
+          <div className="w-full lg:w-1/2 flex justify-center lg:block">
+            <div className="w-[min(300px,80vw)] lg:w-full">
+              <HeroGlobe />
+            </div>
           </div>
         </div>
 
