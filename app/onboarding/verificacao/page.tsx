@@ -41,14 +41,22 @@ export default function Page() {
     if (resendCooldown > 0) return;
     setError(null);
     setCode("");
-    await sendEmailOtp(data.email);
-    setResendCooldown(45);
-    const timer = setInterval(() => {
-      setResendCooldown((t) => {
-        if (t <= 1) { clearInterval(timer); return 0; }
-        return t - 1;
-      });
-    }, 1000);
+    try {
+      const result = await sendEmailOtp(data.email);
+      if (!result.ok) {
+        setError(result.error || "Erro ao enviar código. Tente novamente em alguns minutos.");
+        return;
+      }
+      setResendCooldown(60);
+      const timer = setInterval(() => {
+        setResendCooldown((t) => {
+          if (t <= 1) { clearInterval(timer); return 0; }
+          return t - 1;
+        });
+      }, 1000);
+    } catch (err) {
+      setError("Erro ao enviar. Verifique sua conexão e tente novamente.");
+    }
   };
 
   return (
