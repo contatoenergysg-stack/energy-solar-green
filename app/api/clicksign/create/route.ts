@@ -67,15 +67,22 @@ export async function POST(req: NextRequest) {
       data_assinatura: formatDate(new Date()),
     };
 
+    console.log("[clicksign/create] Criando documento com template:", templateKey);
+    console.log("[clicksign/create] Dados do template:", templateData);
     const doc = await createDocumentFromTemplate(templateKey, docPath, templateData);
+    console.log("[clicksign/create] Documento criado:", doc.key);
 
+    console.log("[clicksign/create] Criando assinante...");
     const signer = await createSigner({
       name: data.fullName || data.name,
       email: data.email,
       phone_number: normalizePhone(data.phone),
     });
+    console.log("[clicksign/create] Assinante criado:", signer.key);
 
+    console.log("[clicksign/create] Adicionando assinante ao documento...");
     const list = await addSignerToDocument(doc.key, signer.key);
+    console.log("[clicksign/create] Assinante adicionado");
 
     return NextResponse.json({
       documentKey: doc.key,
