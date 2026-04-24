@@ -125,8 +125,9 @@ export async function sendEmailOtp(email: string) {
   });
 
   if (error) {
+    console.error("[sendEmailOtp] error:", error.message, error.status);
     const msg = error.message.toLowerCase();
-    if (msg.includes("rate limit") || msg.includes("too many")) {
+    if (msg.includes("rate limit") || msg.includes("too many") || msg.includes("exceeded")) {
       return { ok: false, error: "Muitas tentativas. Aguarde alguns minutos e tente novamente." };
     }
     return { ok: false, error: error.message };
