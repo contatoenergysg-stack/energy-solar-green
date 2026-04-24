@@ -38,16 +38,20 @@ function normalizePhone(phone: string): string {
 }
 
 export async function POST(req: NextRequest) {
+  const errors: string[] = [];
   try {
+    errors.push("1. Iniciando processamento...");
     const data = (await req.json()) as OnboardingData;
+    errors.push("2. Dados recebidos com sucesso");
 
     const templateKey = process.env.CLICKSIGN_TEMPLATE_KEY;
     if (!templateKey) {
       return NextResponse.json(
-        { error: "CLICKSIGN_TEMPLATE_KEY não configurado." },
+        { error: "CLICKSIGN_TEMPLATE_KEY não configurado.", steps: errors },
         { status: 500 }
       );
     }
+    errors.push("3. Template key encontrado");
 
     const discount = (getDiscountPercent(data.monthlyBill) * 100).toFixed(0);
     const cpfDigits = data.document?.replace(/\D/g, "") ?? "";
@@ -66,23 +70,23 @@ export async function POST(req: NextRequest) {
       cidade: extractCity(data.address ?? ""),
       data_assinatura: formatDate(new Date()),
     };
+    errors.push("4. Dados de template preparados");
 
-    console.log("[clicksign/create] Criando documento com template:", templateKey);
-    console.log("[clicksign/create] Dados do template:", templateData);
+    errors.push("5. Criando documento a partir do template...");
     const doc = await createDocumentFromTemplate(templateKey, docPath, templateData);
-    console.log("[clicksign/create] Documento criado:", doc.key);
+    errors.push(`6. Documento criado: ${doc.key}`);
 
-    console.log("[clicksign/create] Criando assinante...");
+    errors.push("7. Criando assinante...");
     const signer = await createSigner({
       name: data.fullName || data.name,
       email: data.email,
       phone_number: normalizePhone(data.phone),
     });
-    console.log("[clicksign/create] Assinante criado:", signer.key);
+    errors.push(`8. Assinante criado: ${signer.key}`);
 
-    console.log("[clicksign/create] Adicionando assinante ao documento...");
+    errors.push("9. Adicionando assinante ao documento...");
     const list = await addSignerToDocument(doc.key, signer.key);
-    console.log("[clicksign/create] Assinante adicionado");
+    errors.push("10. Sucesso!");
 
     return NextResponse.json({
       documentKey: doc.key,
@@ -91,10 +95,13 @@ export async function POST(req: NextRequest) {
     });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
-    console.error("[clicksign/create] ERRO DETALHADO:", msg);
-    console.error("[clicksign/create] STACK:", err instanceof Error ? err.stack : "");
+    errors.push(`ERRO: ${msg}`);
+    if (err instanceof Error && err.stack) {
+      errors.push(`Stack: ${err.stack}`);
+    }
+    console.error("[clicksign/create]", msg);
     return NextResponse.json(
-      { error: msg },
+      { error: msg, steps: errors },
       { status: 500 }
     );
   }
