@@ -254,9 +254,6 @@ export default function Page() {
                   onClick={retryWithPassword}
                   className="w-full h-10 rounded-xl bg-secondary-900 text-tertiary font-label text-sm font-medium hover:bg-secondary-800 transition-colors flex items-center justify-center gap-2"
                 >
-                  {parseState === "parsing" ? (
-                    <Loader2 size={14} className="animate-spin" />
-                  ) : null}
                   Processar com essa senha
                 </button>
               )}
