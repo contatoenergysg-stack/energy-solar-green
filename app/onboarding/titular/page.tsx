@@ -20,7 +20,7 @@ export default function Page() {
   const { data, update } = useOnboarding();
 
   const isValid =
-    data.fullName.trim().length >= 2 &&
+    (data.fullName || data.name).trim().length >= 2 &&
     data.nationality.trim().length > 0 &&
     data.rg.trim().length >= 4 &&
     data.civilStatus !== "";
