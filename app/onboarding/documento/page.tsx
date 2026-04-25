@@ -71,7 +71,7 @@ export default function Page() {
 
         <p className="mt-4 font-label text-sm text-secondary-600 flex items-center gap-2">
           <Info size={14} />
-          Como encontro esses dados na conta de luz?
+          Dados do titular da conta
         </p>
 
         <OnboardingNav backHref="/onboarding/verificacao" nextDisabled={!isValid} />
