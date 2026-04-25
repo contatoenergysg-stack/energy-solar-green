@@ -19,6 +19,14 @@ export default function Page() {
   const router = useRouter();
   const { data, update } = useOnboarding();
 
+  const formatRg = (raw: string): string => {
+    const digits = raw.replace(/\D/g, "").slice(0, 9);
+    if (digits.length <= 2) return digits;
+    if (digits.length <= 5) return `${digits.slice(0, 2)}.${digits.slice(2)}`;
+    if (digits.length <= 8) return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(5)}`;
+    return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(5, 8)}-${digits.slice(8)}`;
+  };
+
   const isValid =
     (data.fullName || data.name).trim().length >= 2 &&
     data.nationality.trim().length > 0 &&
@@ -81,7 +89,7 @@ export default function Page() {
           label="RG"
           placeholder="00.000.000-0"
           value={data.rg}
-          onChange={(e) => update({ rg: e.target.value })}
+          onChange={(e) => update({ rg: formatRg(e.target.value) })}
           required
           inputMode="numeric"
         />
