@@ -1,39 +1,61 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { Mail, ArrowRight, CheckCircle2 } from "lucide-react";
-import { signInWithMagicLink } from "@/app/actions/auth";
+import { Mail, ArrowRight } from "lucide-react";
+import { sendEmailOtp } from "@/app/actions/onboarding";
+import { verifyEmailOtp } from "@/app/actions/onboarding";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 
 export function DashboardLogin() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
+  const [step, setStep] = useState<"email" | "code">("email");
   const [loading, setLoading] = useState(false);
-  const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSendCode(e: React.FormEvent) {
     e.preventDefault();
     if (!email.trim()) return;
     setLoading(true);
     setError(null);
 
-    // Após o magic link, o callback redireciona para /dashboard,
-    // que detecta o e-mail admin e redireciona para /admin
-    const result = await signInWithMagicLink(email.trim(), "/dashboard");
+    const result = await sendEmailOtp(email.trim());
 
     setLoading(false);
     if (!result.ok) {
       const msg = result.error ?? "";
-      const translated = msg.toLowerCase().includes("rate limit")
-        ? "Muitas tentativas recentes. Aguarde alguns minutos e tente novamente."
-        : msg || "Erro ao enviar link. Tente novamente.";
-      setError(translated);
+      setError(
+        msg.toLowerCase().includes("rate limit")
+          ? "Muitas tentativas recentes. Aguarde alguns minutos e tente novamente."
+          : msg || "Erro ao enviar código. Tente novamente."
+      );
       return;
     }
-    setSent(true);
+    setStep("code");
+  }
+
+  async function handleVerifyCode(e: React.FormEvent) {
+    e.preventDefault();
+    if (code.trim().length < 6) return;
+    setLoading(true);
+    setError(null);
+
+    const result = await verifyEmailOtp(email.trim(), code.trim());
+
+    setLoading(false);
+    if (!result.ok) {
+      setError("Código inválido ou expirado. Tente novamente.");
+      return;
+    }
+
+    // Redireciona — o /dashboard server component detecta o admin e vai para /admin
+    router.push("/dashboard");
+    router.refresh();
   }
 
   return (
@@ -52,27 +74,7 @@ export function DashboardLogin() {
           </Link>
         </div>
 
-        {sent ? (
-          <div className="text-center">
-            <div className="inline-grid place-items-center w-16 h-16 rounded-full bg-primary/20 mb-6">
-              <CheckCircle2 size={28} className="text-secondary-900" />
-            </div>
-            <h1 className="font-display text-display-sm text-secondary-900">
-              Verifique seu e-mail
-            </h1>
-            <p className="mt-4 font-body text-secondary-600 leading-relaxed">
-              Enviamos um link de acesso para{" "}
-              <strong className="text-secondary-900">{email}</strong>.<br />
-              Clique no link para entrar.
-            </p>
-            <button
-              onClick={() => { setSent(false); setEmail(""); }}
-              className="mt-6 font-label text-sm text-secondary-500 underline underline-offset-4 hover:text-secondary-900"
-            >
-              Usar outro e-mail
-            </button>
-          </div>
-        ) : (
+        {step === "email" ? (
           <>
             <h1 className="font-display text-display-sm text-secondary-900 text-center mb-2">
               Acesso
@@ -87,7 +89,7 @@ export function DashboardLogin() {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSendCode} className="space-y-4">
               <Input
                 label="E-mail"
                 type="email"
@@ -107,7 +109,7 @@ export function DashboardLogin() {
                 {loading ? "Enviando..." : (
                   <>
                     <Mail size={16} />
-                    Enviar link de acesso
+                    Enviar código de acesso
                     <ArrowRight size={16} />
                   </>
                 )}
@@ -123,6 +125,54 @@ export function DashboardLogin() {
                 Cadastre-se agora
               </Link>
             </p>
+          </>
+        ) : (
+          <>
+            <h1 className="font-display text-display-sm text-secondary-900 text-center mb-2">
+              Verifique seu e-mail
+            </h1>
+            <p className="font-body text-secondary-600 text-center mb-8">
+              Enviamos um código para{" "}
+              <strong className="text-secondary-900">{email}</strong>.
+            </p>
+
+            {error && (
+              <div className="mb-5 px-4 py-3 rounded-xl bg-red-50 border border-red-200 font-label text-sm text-red-700">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleVerifyCode} className="space-y-4">
+              <Input
+                label="Código de verificação"
+                placeholder="00000000"
+                value={code}
+                onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 8))}
+                required
+                inputMode="numeric"
+                autoFocus
+              />
+              <Button
+                type="submit"
+                size="lg"
+                disabled={loading || code.trim().length < 6}
+                className="w-full"
+              >
+                {loading ? "Verificando..." : (
+                  <>
+                    Entrar
+                    <ArrowRight size={16} />
+                  </>
+                )}
+              </Button>
+            </form>
+
+            <button
+              onClick={() => { setStep("email"); setCode(""); setError(null); }}
+              className="mt-6 w-full text-center font-label text-sm text-secondary-500 underline underline-offset-4 hover:text-secondary-900"
+            >
+              Usar outro e-mail
+            </button>
           </>
         )}
       </div>
