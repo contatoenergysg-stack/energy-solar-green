@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { DashboardLogin } from "@/components/admin/DashboardLogin";
+import { signOutToDashboard } from "@/app/actions/auth";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
@@ -35,6 +36,14 @@ export default async function DashboardPage() {
           <Link href="/" className="mt-8 inline-block">
             <Button variant="outline">Voltar à home</Button>
           </Link>
+          <form action={signOutToDashboard} className="mt-4">
+            <button
+              type="submit"
+              className="font-label text-xs text-secondary-400 underline underline-offset-4 hover:text-secondary-600"
+            >
+              Entrar com outro e-mail
+            </button>
+          </form>
         </div>
       </div>
     );

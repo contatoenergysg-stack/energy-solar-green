@@ -56,6 +56,12 @@ export async function signOut() {
   redirect("/");
 }
 
+export async function signOutToDashboard() {
+  const supabase = await createClient();
+  await supabase.auth.signOut();
+  redirect("/dashboard");
+}
+
 // ── Get current session user (server) ────────────────────
 export async function getUser() {
   const supabase = await createClient();
