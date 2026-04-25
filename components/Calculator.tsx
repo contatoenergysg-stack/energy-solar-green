@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState, useEffect } from "react";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { calculateSavings, formatCurrency } from "@/lib/utils";
@@ -12,6 +13,7 @@ export function Calculator() {
 
   const savings = useMemo(() => calculateSavings(bill), [bill]);
   const sliderPct = `${((bill - MIN) / (MAX - MIN)) * 100}%`;
+  const lowSavings = savings.monthly < 30;
 
   /* Contadores animados */
   const mvMonthly = useMotionValue(savings.monthly);
@@ -91,12 +93,11 @@ export function Calculator() {
                 aria-valuemin={MIN}
                 aria-valuemax={MAX}
                 aria-valuenow={bill}
-                aria-label="Valor da sua conta de luz"
               />
 
+              {/* Apenas extremos — centro era redundante com o valor no label */}
               <div className="mt-2 flex justify-between font-label text-[11px] text-secondary-500">
                 <span>R$ 100</span>
-                <span>R$ 2.500</span>
                 <span>R$ 5.000</span>
               </div>
 
@@ -108,25 +109,37 @@ export function Calculator() {
                   <p className="font-label text-xs uppercase tracking-wider text-secondary-500">
                     Economia mensal
                   </p>
-                  <motion.span className="mt-1.5 block font-display font-semibold leading-none tracking-tight text-secondary-900 tabular-nums"
+                  <motion.span
+                    layout
+                    className="mt-1.5 block font-display font-semibold leading-none tracking-tight text-secondary-900 tabular-nums"
                     style={{ fontSize: "clamp(2.25rem, 5vw, 3.75rem)" }}
                   >
                     {formattedMonthly}
                   </motion.span>
-                  <p className="mt-2 font-body italic text-secondary-500 text-sm leading-snug">
-                    por ficar com a ESG
-                  </p>
+
+                  {lowSavings ? (
+                    <p className="mt-2 font-label text-xs text-secondary-400 italic leading-snug">
+                      Confira se esse é o seu valor médio mensal
+                    </p>
+                  ) : (
+                    <p className="mt-2 font-body italic text-secondary-500 text-sm leading-snug">
+                      com energia solar por assinatura
+                    </p>
+                  )}
                 </div>
 
                 {/* Divisor vertical */}
                 <div className="w-px self-stretch bg-secondary-200 shrink-0" aria-hidden />
 
                 {/* Secundário — anual */}
-                <div className="shrink-0 min-w-[120px]">
+                <div className="shrink-0 w-[30%] max-w-[160px] min-w-[100px]">
                   <p className="font-label text-xs uppercase tracking-wider text-secondary-500">
                     Economia anual
                   </p>
-                  <motion.span className="mt-1.5 block font-display text-2xl font-semibold leading-none tracking-tight text-secondary-700 tabular-nums">
+                  <motion.span
+                    layout
+                    className="mt-1.5 block font-display text-2xl font-semibold leading-none tracking-tight text-secondary-700 tabular-nums"
+                  >
                     {formattedAnnual}
                   </motion.span>
                   <p className="mt-2 font-label text-xs text-secondary-400">
@@ -135,6 +148,18 @@ export function Calculator() {
                 </div>
 
               </div>
+
+              {/* Ponte pós-cálculo — discreta, sem pressionar */}
+              <div className="mt-6 pt-5 border-t border-secondary-100">
+                <Link
+                  href="#como-funciona"
+                  className="font-label text-sm text-secondary-600 hover:text-secondary-900 transition-colors duration-200 inline-flex items-center gap-1.5"
+                >
+                  Ver como funciona
+                  <span aria-hidden>→</span>
+                </Link>
+              </div>
+
             </div>
           </div>
 
