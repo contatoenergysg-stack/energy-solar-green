@@ -7,6 +7,7 @@ import { calculateSavings, formatCurrency } from "@/lib/utils";
 
 const MIN = 100;
 const MAX = 5000;
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function Calculator() {
   const [bill, setBill] = useState<number>(850);
@@ -15,7 +16,6 @@ export function Calculator() {
   const sliderPct = `${((bill - MIN) / (MAX - MIN)) * 100}%`;
   const lowSavings = savings.monthly < 30;
 
-  /* Contadores animados */
   const mvMonthly = useMotionValue(savings.monthly);
   const mvAnnual = useMotionValue(savings.annual);
   const smoothedMonthly = useSpring(mvMonthly, { stiffness: 120, damping: 22 });
@@ -42,8 +42,14 @@ export function Calculator() {
       <div className="relative mx-auto max-w-[1400px] px-6 lg:px-10">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
 
-          {/* Coluna esquerda — heading */}
-          <div className="lg:col-span-5">
+          {/* Coluna esquerda */}
+          <motion.div
+            className="lg:col-span-5"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.7, ease: EASE }}
+          >
             <p className="font-label text-xs uppercase tracking-[0.25em] text-primary mb-4 flex items-center gap-3">
               <span className="inline-block w-8 h-px bg-primary" />
               Calculadora
@@ -63,10 +69,16 @@ export function Calculator() {
             <p className="mt-6 font-body text-lg text-tertiary/80 max-w-md leading-relaxed">
               Informe o valor médio da sua conta de luz e veja sua economia mensal e anual em tempo real.
             </p>
-          </div>
+          </motion.div>
 
-          {/* Coluna direita — card interativo */}
-          <div className="lg:col-span-7">
+          {/* Coluna direita — card */}
+          <motion.div
+            className="lg:col-span-7"
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.75, ease: EASE, delay: 0.1 }}
+          >
             <div className="bg-tertiary text-secondary-900 rounded-3xl p-6 lg:p-10 border border-primary-700/20 shadow-2xl shadow-black/20">
 
               {/* Slider */}
@@ -75,7 +87,8 @@ export function Calculator() {
                 className="font-label text-xs uppercase tracking-wider text-secondary-600 flex items-center justify-between"
               >
                 <span>Sua conta de luz hoje</span>
-                <span className="font-display text-2xl lg:text-3xl font-semibold text-secondary-900 normal-case tracking-normal tabular-nums">
+                {/* typeset: font-bold + tracking-tight para o número de input */}
+                <span className="font-display text-2xl lg:text-3xl font-bold text-secondary-900 normal-case tracking-tight tabular-nums">
                   {formatCurrency(bill)}
                 </span>
               </label>
@@ -95,73 +108,102 @@ export function Calculator() {
                 aria-valuenow={bill}
               />
 
-              {/* Apenas extremos — centro era redundante com o valor no label */}
-              <div className="mt-2 flex justify-between font-label text-[11px] text-secondary-500">
+              <div className="mt-2 flex justify-between font-label text-[11px] text-secondary-400">
                 <span>R$ 100</span>
                 <span>R$ 5.000</span>
               </div>
 
-              {/* Resultado — mensal em destaque, anual ao lado */}
+              {/* Resultado */}
               <div className="mt-8 pt-8 border-t border-secondary-200 flex items-start gap-6 lg:gap-10">
 
                 {/* Principal — mensal */}
-                <div className="flex-1 min-w-0">
-                  <p className="font-label text-xs uppercase tracking-wider text-secondary-500">
+                <motion.div
+                  className="flex-1 min-w-0"
+                  initial={{ opacity: 0, x: -12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.55, ease: EASE, delay: 0.25 }}
+                >
+                  {/* colorize: dot verde lima antes do label principal */}
+                  <p className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary-500 flex items-center gap-2">
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary shrink-0" aria-hidden />
                     Economia mensal
                   </p>
+                  {/* typeset: font-bold (de semibold) para número principal */}
                   <motion.span
                     layout
-                    className="mt-1.5 block font-display font-semibold leading-none tracking-tight text-secondary-900 tabular-nums"
+                    className="mt-2 block font-display font-bold leading-none tracking-tight text-secondary-900 tabular-nums"
                     style={{ fontSize: "clamp(2.25rem, 5vw, 3.75rem)" }}
                   >
                     {formattedMonthly}
                   </motion.span>
 
                   {lowSavings ? (
-                    <p className="mt-2 font-label text-xs text-secondary-400 italic leading-snug">
+                    <p className="mt-2 font-label text-[11px] text-secondary-400 italic">
                       Confira se esse é o seu valor médio mensal
                     </p>
                   ) : (
-                    <p className="mt-2 font-body italic text-secondary-500 text-sm leading-snug">
+                    /* typeset: label compacto em vez de body italic (não quebra linha) */
+                    <p className="mt-2 font-label text-[11px] text-secondary-500">
                       com energia solar por assinatura
                     </p>
                   )}
-                </div>
+                </motion.div>
 
-                {/* Divisor vertical */}
-                <div className="w-px self-stretch bg-secondary-200 shrink-0" aria-hidden />
+                {/* colorize: divisor em primary/25 + animate: scaleY da entrada */}
+                <motion.div
+                  className="w-px self-stretch bg-primary/25 shrink-0"
+                  aria-hidden
+                  initial={{ scaleY: 0, originY: 0 }}
+                  whileInView={{ scaleY: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, ease: EASE, delay: 0.38 }}
+                  style={{ transformOrigin: "top" }}
+                />
 
                 {/* Secundário — anual */}
-                <div className="shrink-0 w-[30%] max-w-[160px] min-w-[100px]">
-                  <p className="font-label text-xs uppercase tracking-wider text-secondary-500">
+                <motion.div
+                  className="shrink-0 w-[30%] max-w-[160px] min-w-[100px]"
+                  initial={{ opacity: 0, x: 12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.55, ease: EASE, delay: 0.3 }}
+                >
+                  <p className="font-label text-[10px] uppercase tracking-[0.2em] text-secondary-400">
                     Economia anual
                   </p>
                   <motion.span
                     layout
-                    className="mt-1.5 block font-display text-2xl font-semibold leading-none tracking-tight text-secondary-700 tabular-nums"
+                    className="mt-2 block font-display text-2xl font-semibold leading-none tracking-tight text-secondary-700 tabular-nums"
                   >
                     {formattedAnnual}
                   </motion.span>
-                  <p className="mt-2 font-label text-xs text-secondary-400">
+                  {/* typeset: text-[11px] para legibilidade mínima */}
+                  <p className="mt-2 font-label text-[11px] text-secondary-400">
                     estimativa para 12 meses
                   </p>
-                </div>
+                </motion.div>
 
               </div>
 
-              {/* Ponte pós-cálculo — discreta, sem pressionar */}
+              {/* colorize + animate: link em verde com arrow slide no hover */}
               <div className="mt-6 pt-5 border-t border-secondary-100">
                 <Link
                   href="#como-funciona"
-                  className="font-label text-sm text-secondary-600 hover:text-secondary-900 transition-colors duration-200 inline-flex items-center gap-1.5"
+                  className="group font-label text-sm text-primary hover:text-primary-600 transition-colors duration-200 inline-flex items-center gap-1.5"
                 >
                   Ver como funciona
-                  <span aria-hidden>→</span>
+                  <span
+                    aria-hidden
+                    className="inline-block transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
+                  >
+                    →
+                  </span>
                 </Link>
               </div>
 
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>
