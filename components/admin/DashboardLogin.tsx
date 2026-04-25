@@ -26,7 +26,11 @@ export function DashboardLogin() {
 
     setLoading(false);
     if (!result.ok) {
-      setError(result.error ?? "Erro ao enviar link. Tente novamente.");
+      const msg = result.error ?? "";
+      const translated = msg.toLowerCase().includes("rate limit")
+        ? "Muitas tentativas recentes. Aguarde alguns minutos e tente novamente."
+        : msg || "Erro ao enviar link. Tente novamente.";
+      setError(translated);
       return;
     }
     setSent(true);
