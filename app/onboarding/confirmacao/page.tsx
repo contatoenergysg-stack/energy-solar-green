@@ -64,8 +64,8 @@ export default function Page() {
           transition={{ duration: 0.55, ease: EASE }}
           className="mb-8"
         >
-          <span className="inline-flex items-center gap-1.5 text-[11px] font-label uppercase tracking-[0.22em] text-secondary-500 mb-3">
-            <span className="w-3 h-px bg-secondary-400" />
+          <span className="inline-flex items-center gap-1.5 text-[11px] font-label uppercase tracking-[0.22em] text-primary mb-3">
+            <span className="w-3 h-px bg-primary" />
             Revisão
           </span>
           <h1 className="font-display text-display-md text-secondary-900">
@@ -99,7 +99,7 @@ export default function Page() {
             />
 
             <div>
-              <p className="font-label text-[10px] uppercase tracking-wider text-secondary-400">
+              <p className="font-label text-[10px] uppercase tracking-wider text-primary/60">
                 Você economizará
               </p>
               <motion.p className="font-display text-3xl font-semibold text-primary mt-1 tabular-nums">
@@ -129,9 +129,10 @@ export default function Page() {
           </p>
 
           {/* Imóvel card */}
-          <ReviewCard delay={0.14}>
+          <ReviewCard delay={0.14} primary>
             <div className="flex items-center justify-between mb-5">
-              <h3 className="font-display text-lg font-semibold text-secondary-900">
+              <h3 className="font-display text-lg font-semibold text-secondary-900 flex items-center gap-2">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary shrink-0" aria-hidden />
                 Dados do imóvel
               </h3>
               <WigglePencil
@@ -151,7 +152,8 @@ export default function Page() {
           <div className="grid sm:grid-cols-2 gap-3">
             <ReviewCard delay={0.22}>
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-display text-base font-semibold text-secondary-900">
+                <h3 className="font-display text-base font-semibold text-secondary-900 flex items-center gap-2">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary shrink-0" aria-hidden />
                   Titular da conta
                 </h3>
                 <WigglePencil
@@ -171,7 +173,8 @@ export default function Page() {
 
             <ReviewCard delay={0.28}>
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-display text-base font-semibold text-secondary-900">
+                <h3 className="font-display text-base font-semibold text-secondary-900 flex items-center gap-2">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary shrink-0" aria-hidden />
                   Contato
                 </h3>
                 <WigglePencil
@@ -195,13 +198,23 @@ export default function Page() {
   );
 }
 
-function ReviewCard({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+function ReviewCard({
+  children,
+  delay = 0,
+  primary = false,
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  primary?: boolean;
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay }}
-      className="rounded-2xl border border-secondary-200 bg-tertiary px-5 py-5 sm:px-6 sm:py-6"
+      className={`rounded-2xl border bg-tertiary px-5 py-5 sm:px-6 sm:py-6 ${
+        primary ? "border-primary/30" : "border-secondary-200"
+      }`}
     >
       {children}
     </motion.div>
@@ -222,7 +235,7 @@ function WigglePencil({
       type="button"
       onClick={onClick}
       aria-label={label}
-      className="p-2 rounded-full text-secondary-500 hover:bg-secondary-100 hover:text-secondary-900 transition-colors"
+      className="p-2 rounded-full text-secondary-400 hover:bg-primary/15 hover:text-secondary-900 transition-colors"
       whileHover={{
         rotate: [-4, 4, -4, 2, 0],
         transition: { duration: 0.4, ease: "easeInOut" },
