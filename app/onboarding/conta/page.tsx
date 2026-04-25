@@ -5,7 +5,7 @@ import { OnboardingShell } from "@/components/onboarding/OnboardingShell";
 import { OnboardingNav } from "@/components/onboarding/OnboardingNav";
 import { useOnboarding } from "@/lib/onboarding-store";
 import { useDropzone } from "react-dropzone";
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { Upload, File as FileIcon, Eye, EyeOff, X, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import type { ParsedBill } from "@/lib/parsers/bill";
 import { parseBillText } from "@/lib/parsers/bill";
@@ -22,6 +22,24 @@ export default function Page() {
   const [parseError, setParseError] = useState<string | null>(null);
   const [parsed, setParsed] = useState<ParsedBill | null>(null);
   const fileRef = useRef<File | null>(null);
+
+  // Restaura o estado após voltar da confirmação — o File não persiste,
+  // mas os dados já estão no store e não precisam ser re-extraídos.
+  useEffect(() => {
+    if (data.billFileName && data.avgMonthlyKwh > 0 && parseState === "idle") {
+      setParsed({
+        avgMonthlyKwh: data.avgMonthlyKwh,
+        kwhTariff: data.kwhTariff,
+        consumptionHistory: data.consumptionHistory,
+        monthlyBill: data.monthlyBill,
+        distributor: (data.distributor as ParsedBill["distributor"]) ?? "outros",
+        installationNumber: data.installationNumber ?? "",
+        address: data.address ?? "",
+      });
+      setParseState("done");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const isValid = !!data.billFileName && parseState === "done";
   const isPasswordError = parseState === "error" && (
