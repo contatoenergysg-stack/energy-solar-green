@@ -36,6 +36,14 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // Protect admin routes
+  if (!user && request.nextUrl.pathname.startsWith("/admin")) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/entrar";
+    url.searchParams.set("redirectTo", request.nextUrl.pathname);
+    return NextResponse.redirect(url);
+  }
+
   // Redirect logged-in users away from /entrar
   if (user && request.nextUrl.pathname === "/entrar") {
     return NextResponse.redirect(new URL("/dashboard", request.url));
