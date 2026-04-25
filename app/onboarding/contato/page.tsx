@@ -49,14 +49,14 @@ export default function Page() {
         <div>
           <Input
             label="Nome para contato"
-            placeholder="Como vamos te chamar?"
+            placeholder="Nome"
             value={data.name}
             onChange={(e) => update({ name: e.target.value })}
             required
             autoComplete="name"
           />
           <p className="mt-1.5 font-label text-[11px] text-secondary-500">
-            Quem vai receber faturas e suporte. Pode ser diferente do titular da conta de luz.
+            Dados usados para contato sobre sua assinatura.
           </p>
         </div>
         <Input
