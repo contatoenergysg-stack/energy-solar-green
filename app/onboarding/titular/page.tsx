@@ -28,7 +28,7 @@ export default function Page() {
   };
 
   const isValid =
-    (data.fullName || data.name).trim().length >= 2 &&
+    data.fullName.trim().length >= 2 &&
     data.nationality.trim().length > 0 &&
     data.rg.trim().length >= 4 &&
     data.civilStatus !== "";
@@ -58,7 +58,7 @@ export default function Page() {
           <Input
             label="Nome do titular"
             placeholder="Nome conforme registrado na distribuidora"
-            value={data.fullName || data.name}
+            value={data.fullName}
             onChange={(e) => update({ fullName: e.target.value })}
             required
           />
