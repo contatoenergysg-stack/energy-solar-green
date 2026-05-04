@@ -83,10 +83,6 @@ export function HowItWorks() {
         </div>
 
         <div className="relative">
-          <div
-            aria-hidden
-            className="absolute top-8 left-0 right-0 h-px bg-secondary-200 hidden lg:block"
-          />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {STEPS.map((s) => (
               <div
