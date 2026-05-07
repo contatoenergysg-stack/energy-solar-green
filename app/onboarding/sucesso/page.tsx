@@ -66,15 +66,10 @@ export default function Page() {
           transition={{ duration: 0.45, delay: 0.25, ease: [0.23, 1, 0.32, 1] }}
           className="mt-8 flex flex-wrap items-center gap-3"
         >
-          <Link href="/dashboard">
-            <Button size="lg">
-              Ir para minha área
-              <ArrowRight size={18} />
-            </Button>
-          </Link>
           <Link href="/">
-            <Button size="lg" variant="ghost" onClick={() => reset()}>
+            <Button size="lg" onClick={() => reset()}>
               Voltar ao início
+              <ArrowRight size={18} />
             </Button>
           </Link>
         </motion.div>
@@ -83,9 +78,9 @@ export default function Page() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.4 }}
-          className="mt-10 font-label text-xs text-secondary-400 max-w-sm"
+          className="mt-10 font-body text-base lg:text-lg text-secondary-700 leading-relaxed max-w-xl"
         >
-          Nossa equipe entrará em contato em até 48 horas úteis para confirmar sua adesão junto à distribuidora.
+          Nossa equipe entrará em contato em até <strong className="text-secondary-900 font-semibold">48 horas úteis</strong> para confirmar sua adesão junto à distribuidora.
         </motion.p>
       </div>
     </div>

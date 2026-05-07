@@ -3,10 +3,20 @@
 import { useRouter } from "next/navigation";
 import { OnboardingShell } from "@/components/onboarding/OnboardingShell";
 import { OnboardingNav } from "@/components/onboarding/OnboardingNav";
-import { BRAZILIAN_DISTRIBUTORS, useOnboarding } from "@/lib/onboarding-store";
-import Link from "next/link";
+import { useOnboarding } from "@/lib/onboarding-store";
 import { FormEvent } from "react";
-import { Check } from "lucide-react";
+import { Check, Construction } from "lucide-react";
+
+interface DistOption {
+  name: string;
+  available: boolean;
+}
+
+const DISTRIBUTORS: DistOption[] = [
+  { name: "Light", available: true },
+  { name: "Enel Rio", available: false },
+  { name: "Enel SP", available: false },
+];
 
 export default function Page() {
   const router = useRouter();
@@ -20,44 +30,57 @@ export default function Page() {
   return (
     <OnboardingShell
       title="Qual é sua distribuidora?"
-      description="Selecione a empresa responsável pelo fornecimento de energia elétrica no seu imóvel."
+      description="Atualmente atendemos apenas a região da Light. Novas distribuidoras serão adicionadas em breve."
       accent="Distribuidora de energia"
     >
       <form onSubmit={onSubmit}>
         <div
           role="listbox"
           aria-label="Distribuidora de energia"
-          className="overflow-y-auto rounded-xl border border-secondary-200 divide-y divide-secondary-100"
-          style={{ maxHeight: "288px" }}
+          className="rounded-xl border border-secondary-200 divide-y divide-secondary-100 overflow-hidden"
         >
-          {BRAZILIAN_DISTRIBUTORS.map((d) => {
-            const selected = data.distributor === d;
+          {DISTRIBUTORS.map((d) => {
+            const selected = data.distributor === d.name;
+
+            if (!d.available) {
+              return (
+                <div
+                  key={d.name}
+                  role="option"
+                  aria-selected={false}
+                  aria-disabled={true}
+                  className="w-full flex items-center justify-between px-4 py-3 bg-secondary-50 cursor-not-allowed"
+                >
+                  <span className="font-label text-sm text-secondary-400">
+                    {d.name}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 font-label text-[10px] uppercase tracking-wider text-secondary-500 bg-secondary-200/60 px-2.5 py-1 rounded-full">
+                    <Construction size={11} className="shrink-0" />
+                    Em construção
+                  </span>
+                </div>
+              );
+            }
+
             return (
               <button
-                key={d}
+                key={d.name}
                 type="button"
                 role="option"
                 aria-selected={selected}
-                onClick={() => update({ distributor: d })}
+                onClick={() => update({ distributor: d.name })}
                 className={`w-full flex items-center justify-between px-4 py-3 text-left transition-colors btn-press ${
                   selected
                     ? "bg-secondary-900 text-tertiary"
                     : "bg-tertiary text-secondary-800 hover:bg-secondary-100"
                 }`}
               >
-                <span className="font-label text-sm">{d}</span>
+                <span className="font-label text-sm">{d.name}</span>
                 {selected && <Check size={15} className="shrink-0 text-primary" />}
               </button>
             );
           })}
         </div>
-
-        <Link
-          href="/entrar"
-          className="mt-5 block text-center font-label text-sm text-secondary-500 underline underline-offset-4 hover:text-secondary-900"
-        >
-          Já iniciei meu cadastro
-        </Link>
 
         <OnboardingNav nextDisabled={!data.distributor} />
       </form>
