@@ -63,34 +63,82 @@ export async function loadDraft(sessionId: string) {
 }
 
 // ── Final submission (after signing) ──────────────────────
-export async function submitOnboarding(formData: OnboardingData) {
-  const supabase = await createClient();
+//
+// Chamada por dois caminhos independentes — frontend pós-assinatura E webhook
+// ZapSign. Idempotente via UNIQUE(zapsign_doc_token) ou UNIQUE(zapsign_external_id):
+// se uma das chamadas perder a corrida, o INSERT retorna o registro já criado
+// pela outra.
+export async function submitOnboarding(
+  formData: OnboardingData,
+  meta?: {
+    zapsignDocToken?: string;
+    zapsignExternalId?: string;
+    userId?: string | null;
+  }
+) {
   const admin = getAdminClient();
 
-  const { data: { user } } = await supabase.auth.getUser();
+  let userId: string | null = meta?.userId ?? null;
+  if (!userId) {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    userId = user?.id ?? null;
+  }
+
+  // Idempotência: se já existe subscription para este token, retorna ela.
+  if (meta?.zapsignDocToken) {
+    const { data: existing } = await admin
+      .from("subscriptions")
+      .select("id")
+      .eq("zapsign_doc_token", meta.zapsignDocToken)
+      .maybeSingle();
+    if (existing) return { ok: true, subscriptionId: existing.id, alreadyExisted: true };
+  }
+  if (meta?.zapsignExternalId) {
+    const { data: existing } = await admin
+      .from("subscriptions")
+      .select("id")
+      .eq("zapsign_external_id", meta.zapsignExternalId)
+      .maybeSingle();
+    if (existing) return { ok: true, subscriptionId: existing.id, alreadyExisted: true };
+  }
 
   // 1. Update profile only if authenticated
-  if (user) {
+  if (userId) {
     await admin
       .from("profiles")
       .update({ name: formData.name, phone: formData.phone, cpf: formData.document })
-      .eq("id", user.id);
+      .eq("id", userId);
   }
 
   // 2. Create subscription via admin client (bypasses RLS)
   const { data: sub, error: subError } = await admin
     .from("subscriptions")
     .insert({
-      user_id: user?.id ?? null,
+      user_id: userId,
       distributor: formData.distributor!,
       installation_number: formData.installationNumber || null,
       monthly_bill_brl: formData.monthlyBill,
       discount_percent: getDiscountPercent(formData.monthlyBill),
       status: "pending",
       contract_signed_at: formData.signed ? new Date().toISOString() : null,
+      zapsign_doc_token: meta?.zapsignDocToken ?? null,
+      zapsign_external_id: meta?.zapsignExternalId ?? null,
     })
     .select("id")
     .single();
+
+  // Race condition: a outra chamada inseriu primeiro. Carrega e devolve.
+  if (subError && (subError.code === "23505" || subError.message?.includes("duplicate"))) {
+    if (meta?.zapsignDocToken) {
+      const { data: existing } = await admin
+        .from("subscriptions")
+        .select("id")
+        .eq("zapsign_doc_token", meta.zapsignDocToken)
+        .maybeSingle();
+      if (existing) return { ok: true, subscriptionId: existing.id, alreadyExisted: true };
+    }
+  }
 
   if (subError || !sub) {
     console.error("[submitOnboarding] subscription", subError?.message);
@@ -99,7 +147,7 @@ export async function submitOnboarding(formData: OnboardingData) {
 
   // 3. Create property via admin client
   await admin.from("properties").insert({
-    user_id: user?.id ?? null,
+    user_id: userId,
     subscription_id: sub.id,
     address: formData.address || null,
     titular_name: formData.fullName || formData.name,

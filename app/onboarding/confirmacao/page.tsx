@@ -164,10 +164,8 @@ export default function Page() {
               </div>
               <div className="space-y-3">
                 <InfoRow label="Nome" value={data.fullName || data.name || "—"} delay={0.28} />
-                <InfoRow label="Nacionalidade" value={data.nationality} delay={0.31} />
-                <InfoRow label="CPF" value={data.document} delay={0.34} />
+                <InfoRow label={data.documentType === "cnpj" ? "CNPJ" : "CPF"} value={data.document} delay={0.34} />
                 <InfoRow label="RG" value={data.rg} delay={0.37} />
-                <InfoRow label="Estado civil" value={data.civilStatus || "—"} delay={0.40} />
               </div>
             </ReviewCard>
 

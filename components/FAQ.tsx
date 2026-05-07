@@ -18,7 +18,7 @@ const FAQS: FaqItem[] = [
   },
   {
     q: "Posso cancelar a qualquer momento?",
-    a: "Sim. O contrato é sem fidelidade. Basta solicitar o cancelamento e a gente cuida de tudo com a distribuidora.",
+    a: "Sim, sem multa e sem fidelidade. O cancelamento precisa ser solicitado com 90 dias de antecedência — esse prazo é necessário para realocar sua cota junto à distribuidora. Após a comunicação, a gente cuida de todo o processo.",
   },
   {
     q: "Quanto tempo demora para começar a economizar?",

@@ -29,8 +29,8 @@ const BENEFITS = [
   },
   {
     icon: ShieldCheck,
-    title: "Cancelamento livre",
-    desc: "Sem multa, sem fidelidade escondida. Cancela quando quiser.",
+    title: "Cancelamento sem multa",
+    desc: "Sem fidelidade escondida. Basta avisar com 90 dias de antecedência — tempo necessário para realocar sua cota com a distribuidora.",
   },
   {
     icon: Leaf,

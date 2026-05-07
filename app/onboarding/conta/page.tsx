@@ -41,7 +41,14 @@ export default function Page() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const isValid = !!data.billFileName && parseState === "done";
+  const tariffOk = !!parsed && parsed.kwhTariff > 0;
+  const addressOk = !!parsed && (parsed.address ?? "").trim().length >= 8;
+  const isValid =
+    !!data.billFileName && parseState === "done" && tariffOk && addressOk;
+
+  const missingFields: string[] = [];
+  if (parseState === "done" && !tariffOk) missingFields.push("tarifa unitária (R$/kWh)");
+  if (parseState === "done" && !addressOk) missingFields.push("endereço da unidade consumidora");
   const isPasswordError = parseState === "error" && (
     parseError?.toLowerCase().includes("password") ||
     parseError?.toLowerCase().includes("encrypted")
@@ -202,20 +209,41 @@ export default function Page() {
               )}
 
               {parseState === "done" && parsed && (
-                <div className="rounded-xl bg-secondary-900 px-4 py-3 grid grid-cols-3 gap-3">
-                  <Stat
-                    label="Consumo médio"
-                    value={`${parsed.avgMonthlyKwh.toLocaleString("pt-BR")} kWh`}
-                  />
-                  <Stat
-                    label="Tarifa unitária"
-                    value={`R$ ${parsed.kwhTariff.toFixed(5)}`}
-                  />
-                  <Stat
-                    label="Distribuidora"
-                    value={parsed.distributor.charAt(0).toUpperCase() + parsed.distributor.slice(1)}
-                  />
-                </div>
+                <>
+                  <div className="rounded-xl bg-secondary-900 px-4 py-3 grid grid-cols-3 gap-3">
+                    <Stat
+                      label="Consumo médio"
+                      value={`${parsed.avgMonthlyKwh.toLocaleString("pt-BR")} kWh`}
+                    />
+                    <Stat
+                      label="Tarifa unitária"
+                      value={tariffOk ? `R$ ${parsed.kwhTariff.toFixed(5)}` : "—"}
+                    />
+                    <Stat
+                      label="Distribuidora"
+                      value={parsed.distributor.charAt(0).toUpperCase() + parsed.distributor.slice(1)}
+                    />
+                  </div>
+                  {addressOk && (
+                    <p className="font-label text-[11px] text-secondary-500 px-1 leading-relaxed">
+                      <span className="uppercase tracking-wider text-[10px] text-secondary-400">Endereço:</span>{" "}
+                      {parsed.address}
+                    </p>
+                  )}
+                  {missingFields.length > 0 && (
+                    <div className="flex items-start gap-2 rounded-xl bg-red-50 border border-red-200 px-3 py-2.5">
+                      <AlertCircle size={14} className="text-red-600 shrink-0 mt-0.5" />
+                      <div className="space-y-1">
+                        <p className="font-label text-xs font-medium text-red-700">
+                          Não conseguimos extrair {missingFields.join(" e ")}.
+                        </p>
+                        <p className="font-label text-[11px] text-red-600 leading-relaxed">
+                          Envie um PDF mais nítido da fatura completa, ou entre em contato com o suporte para anexar manualmente.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           ) : (

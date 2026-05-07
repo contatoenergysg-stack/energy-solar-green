@@ -12,10 +12,11 @@ import Link from "next/link";
 
 type Phase = "creating" | "briefing" | "signing" | "signed" | "error";
 
-interface CSSession {
+interface ZSSession {
   documentKey: string;
-  requestSignatureKey: string;
+  signerKey: string;
   widgetUrl: string;
+  externalId: string;
 }
 
 function friendlyError(raw: string, postSign = false): string {
@@ -41,7 +42,7 @@ export default function Page() {
   const router = useRouter();
   const { data, update } = useOnboarding();
   const [phase, setPhase] = useState<Phase>("creating");
-  const [session, setSession] = useState<CSSession | null>(null);
+  const [session, setSession] = useState<ZSSession | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isStuck, setIsStuck] = useState(false);
   const [showSignedLoader, setShowSignedLoader] = useState(false);
@@ -63,7 +64,7 @@ export default function Page() {
 
     async function create() {
       try {
-        const res = await fetch("/api/clicksign/create", {
+        const res = await fetch("/api/zapsign/create", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
@@ -73,7 +74,7 @@ export default function Page() {
         if (cancelled) return;
         clearTimeout(stuckTimerRef.current!);
         setIsStuck(false);
-        setSession(json as CSSession);
+        setSession(json as ZSSession);
         setPhase("briefing");
       } catch (err) {
         if (!cancelled) {
@@ -115,9 +116,9 @@ export default function Page() {
     if (phase !== "signing" || !session) return;
 
     function onMessage(e: MessageEvent) {
-      if (!e.origin.includes("clicksign.com")) return;
-      const raw = typeof e.data === "string" ? e.data : JSON.stringify(e.data ?? "");
-      if (raw.includes("signed") || raw.includes("sign")) {
+      // ZapSign envia eventos como strings: 'zs-doc-loaded', 'zs-doc-signed'
+      if (typeof e.data !== "string") return;
+      if (e.data === "zs-doc-signed") {
         handleSigned();
       }
     }
@@ -133,9 +134,11 @@ export default function Page() {
 
     pollRef.current = setInterval(async () => {
       try {
-        const res = await fetch(`/api/clicksign/status/${session.documentKey}`);
+        const res = await fetch(`/api/zapsign/status/${session.documentKey}`, {
+          cache: "no-store",
+        });
         const json = await res.json();
-        if (json.status === "closed") handleSigned();
+        if (json.status === "signed") handleSigned();
       } catch {
         // ignore transient errors
       }
@@ -160,7 +163,10 @@ export default function Page() {
     setPhase("signed");
     update({ signed: true });
 
-    const result = await submitOnboarding(data);
+    const result = await submitOnboarding(data, {
+      zapsignDocToken: session?.documentKey,
+      zapsignExternalId: session?.externalId,
+    });
     if (result.ok) {
       router.push("/onboarding/sucesso");
     } else {
@@ -346,7 +352,7 @@ export default function Page() {
               <div className="mx-auto max-w-[1100px] flex flex-wrap items-center gap-x-6 gap-y-2">
                 <TrustItem icon={FileCheck} label="Preenchido com seus dados" />
                 <span className="hidden sm:block w-px h-3 bg-tertiary/20" />
-                <TrustItem icon={ShieldCheck} label="Canal seguro ClickSign" />
+                <TrustItem icon={ShieldCheck} label="Canal seguro ZapSign" />
                 <span className="hidden sm:block w-px h-3 bg-tertiary/20" />
                 <TrustItem icon={Scale} label="Validade jurídica ICP-Brasil" />
               </div>
@@ -360,7 +366,7 @@ export default function Page() {
                 title="Assinatura do Termo de Adesão — ESG"
                 className="w-full h-full"
                 style={{ minHeight: "72vh", border: "none", display: "block" }}
-                allow="camera; microphone"
+                allow="camera"
               />
             </div>
           </motion.div>
