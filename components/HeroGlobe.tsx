@@ -53,15 +53,7 @@ export default function HeroGlobe() {
     controls.autoRotateSpeed = 0.7;
     controls.enableZoom = false;
     controls.enablePan = false;
-
-    // No mobile, desabilita o drag/rotate manual — só o auto-rotate.
-    const mq = window.matchMedia("(max-width: 768px)");
-    const applyRotate = () => { controls.enableRotate = !mq.matches; };
-    applyRotate();
-    mq.addEventListener("change", applyRotate);
-
     g.pointOfView({ lat: 15, lng: -30, altitude: 2.3 }, 0);
-    return () => mq.removeEventListener("change", applyRotate);
   }, [countries]);
 
   return (
@@ -70,6 +62,13 @@ export default function HeroGlobe() {
       className="relative w-full max-w-[600px] aspect-square mx-auto flex items-center justify-center"
     >
       <div className="absolute w-[70%] h-[70%] bg-[#d9ff00] rounded-full blur-[110px] opacity-20 pointer-events-none" />
+      {/* Em mobile, pointer-events-none deixa o toque "atravessar" o globo
+          e ir pra página, então o scroll vertical funciona normalmente.
+          Em desktop (md+) o globo recebe interação normal. */}
+      <div
+        className="absolute inset-0 pointer-events-none md:pointer-events-auto flex items-center justify-center"
+        style={{ touchAction: "pan-y" }}
+      >
       {countries && (
         <Globe
           ref={globeRef}
@@ -88,6 +87,7 @@ export default function HeroGlobe() {
           polygonStrokeColor={() => "#9cb300"}
         />
       )}
+      </div>
     </div>
   );
 }
