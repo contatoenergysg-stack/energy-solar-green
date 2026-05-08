@@ -53,7 +53,15 @@ export default function HeroGlobe() {
     controls.autoRotateSpeed = 0.7;
     controls.enableZoom = false;
     controls.enablePan = false;
+
+    // No mobile, desabilita o drag/rotate manual — só o auto-rotate.
+    const mq = window.matchMedia("(max-width: 768px)");
+    const applyRotate = () => { controls.enableRotate = !mq.matches; };
+    applyRotate();
+    mq.addEventListener("change", applyRotate);
+
     g.pointOfView({ lat: 15, lng: -30, altitude: 2.3 }, 0);
+    return () => mq.removeEventListener("change", applyRotate);
   }, [countries]);
 
   return (
