@@ -62,6 +62,12 @@ function statusConfig(s: string) {
   return                        { label: "Pendente",   dot: "oklch(0.82 0.18 80)",  badge: "oklch(0.82 0.18 80 / 0.14)"  };
 }
 
+// Detecta PJ pelo tamanho do documento (CNPJ = 14 dígitos, CPF = 11).
+function isCnpj(doc: string | null): boolean {
+  if (!doc) return false;
+  return doc.replace(/\D/g, "").length === 14;
+}
+
 // ── types ─────────────────────────────────────────────────────────────────────
 type FilterKey = "all" | "new" | "active" | "pending";
 
@@ -362,14 +368,21 @@ function ClientDetail({ client }: { client: AdminClient }) {
           <Field k="phone"  label="Telefone"          value={client.phone} copied={copied} onCopy={copy} />
         </Section>
 
-        <Section title="Titular da conta">
-          <Field k="tname"  label="Nome completo"  value={client.titular_name}         copied={copied} onCopy={copy} />
-          <Field k="cpf"    label="CPF"             value={client.titular_cpf}          copied={copied} onCopy={copy} mono />
-          <Field k="rg"     label="RG"              value={client.titular_rg}           copied={copied} onCopy={copy} mono />
-          <Field k="nat"    label="Nacionalidade"   value={client.titular_nationality}  copied={copied} onCopy={copy} />
-          <Field k="civil"  label="Estado civil"    value={client.titular_civil_status} copied={copied} onCopy={copy} />
-          <Field k="prof"   label="Profissão"        value={client.titular_profession}  copied={copied} onCopy={copy} />
-        </Section>
+        {isCnpj(client.titular_cpf) ? (
+          <Section title="Empresa titular">
+            <Field k="tname"  label="Razão social"  value={client.titular_name} copied={copied} onCopy={copy} />
+            <Field k="cnpj"   label="CNPJ"          value={client.titular_cpf}  copied={copied} onCopy={copy} mono />
+          </Section>
+        ) : (
+          <Section title="Titular da conta">
+            <Field k="tname"  label="Nome completo"  value={client.titular_name}         copied={copied} onCopy={copy} />
+            <Field k="cpf"    label="CPF"             value={client.titular_cpf}          copied={copied} onCopy={copy} mono />
+            <Field k="rg"     label="RG"              value={client.titular_rg}           copied={copied} onCopy={copy} mono />
+            <Field k="nat"    label="Nacionalidade"   value={client.titular_nationality}  copied={copied} onCopy={copy} />
+            <Field k="civil"  label="Estado civil"    value={client.titular_civil_status} copied={copied} onCopy={copy} />
+            <Field k="prof"   label="Profissão"        value={client.titular_profession}  copied={copied} onCopy={copy} />
+          </Section>
+        )}
 
         <Section title="Imóvel">
           <Field k="dist"   label="Distribuidora"  value={client.distributor}         copied={copied} onCopy={copy} capitalize />
