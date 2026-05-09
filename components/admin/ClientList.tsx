@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Copy, Check, Search, X } from "lucide-react";
+import { Copy, Check, Search, X, Download, FileText, Loader2 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 
 export type AdminClient = {
@@ -20,6 +20,7 @@ export type AdminClient = {
   titular_civil_status: string | null;
   titular_nationality: string | null;
   titular_profession: string | null;
+  energy_bill_path: string | null;
   email: string | null;
   phone: string | null;
   name: string | null;
@@ -376,6 +377,10 @@ function ClientDetail({ client }: { client: AdminClient }) {
           <Field k="addr"   label="Endereço"        value={client.address}             copied={copied} onCopy={copy} />
         </Section>
 
+        <Section title="Documentos">
+          <BillFileRow path={client.energy_bill_path} />
+        </Section>
+
         <Section title="Assinatura">
           <Field k="status" label="Status"          value={st.label}     copied={copied} onCopy={copy} />
           <Field k="date"   label="Data assinatura" value={fmt(client.contract_signed_at)} copied={copied} onCopy={copy} />
@@ -450,6 +455,79 @@ function Field({
             ? <Check size={12} style={{ color: C.primary }} />
             : <Copy  size={12} style={{ color: C.textMuted }} />
           }
+        </span>
+      )}
+    </div>
+  );
+}
+
+// ── bill file row (signed-url on demand) ─────────────────────────────────────
+function BillFileRow({ path }: { path: string | null }) {
+  const [busy, setBusy] = useState(false);
+  const [err,  setErr]  = useState<string | null>(null);
+
+  const fileName = path ? path.split("/").pop() ?? "conta.pdf" : null;
+
+  const open = useCallback(async () => {
+    if (!path || busy) return;
+    setBusy(true);
+    setErr(null);
+    try {
+      const res = await fetch(`/api/admin/file?path=${encodeURIComponent(path)}`);
+      const json = await res.json();
+      if (!res.ok || !json.url) throw new Error(json.error ?? "falha");
+      window.open(json.url as string, "_blank", "noopener,noreferrer");
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Falha ao abrir o arquivo.");
+    } finally {
+      setBusy(false);
+    }
+  }, [path, busy]);
+
+  return (
+    <div
+      className="flex items-center gap-4 px-4 py-2.5"
+      style={{ borderBottom: `1px solid ${C.borderSubtle}` }}
+    >
+      <span className="font-label text-[11px] w-32 shrink-0" style={{ color: C.textMuted }}>
+        Conta de luz
+      </span>
+      {path ? (
+        <>
+          <span
+            className="flex-1 flex items-center gap-2 font-label text-[12px] truncate"
+            style={{ color: C.text }}
+          >
+            <FileText size={13} style={{ color: C.textSec }} />
+            <span className="truncate">{fileName}</span>
+          </span>
+          <button
+            type="button"
+            onClick={open}
+            disabled={busy}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded font-label text-[11px] font-medium transition-colors"
+            style={{
+              background: C.elevated,
+              color: C.text,
+              border: `1px solid ${C.border}`,
+              opacity: busy ? 0.6 : 1,
+            }}
+          >
+            {busy
+              ? <Loader2 size={11} className="animate-spin" />
+              : <Download size={11} />
+            }
+            Abrir
+          </button>
+        </>
+      ) : (
+        <span className="flex-1 font-label text-[12px]" style={{ color: C.textMuted }}>
+          —
+        </span>
+      )}
+      {err && (
+        <span className="font-label text-[11px]" style={{ color: "oklch(0.65 0.22 22)" }}>
+          {err}
         </span>
       )}
     </div>

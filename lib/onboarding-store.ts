@@ -33,6 +33,7 @@ export interface OnboardingData {
   billFileName: string | null;
   billFileSize: number | null;
   billPassword: string;
+  billStoragePath: string | null;
   complementaryDocName: string | null;
   // Extracted from bill PDF
   avgMonthlyKwh: number;
@@ -65,6 +66,7 @@ export const INITIAL_DATA: OnboardingData = {
   billFileName: null,
   billFileSize: null,
   billPassword: "",
+  billStoragePath: null,
   complementaryDocName: null,
   avgMonthlyKwh: 0,
   kwhTariff: 0,

@@ -60,6 +60,7 @@ export default async function AdminPage() {
       titular_civil_status: property?.titular_civil_status ?? null,
       titular_nationality: property?.titular_nationality ?? null,
       titular_profession: property?.titular_profession ?? null,
+      energy_bill_path: property?.energy_bill_path ?? null,
       email: authUser?.email ?? null,
       phone: profile?.phone ?? null,
       name: profile?.name ?? property?.titular_name ?? null,

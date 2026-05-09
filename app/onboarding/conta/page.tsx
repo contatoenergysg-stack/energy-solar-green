@@ -12,6 +12,7 @@ import { parseBillText } from "@/lib/parsers/bill";
 import { extractPdfText } from "@/lib/parsers/extract-pdf-text";
 
 type ParseState = "idle" | "parsing" | "done" | "error";
+type UploadState = "idle" | "uploading" | "done" | "error";
 
 export default function Page() {
   const router = useRouter();
@@ -21,6 +22,8 @@ export default function Page() {
   const [parseState, setParseState] = useState<ParseState>("idle");
   const [parseError, setParseError] = useState<string | null>(null);
   const [parsed, setParsed] = useState<ParsedBill | null>(null);
+  const [uploadState, setUploadState] = useState<UploadState>("idle");
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const fileRef = useRef<File | null>(null);
 
   // Restaura o estado após voltar da confirmação — o File não persiste,
@@ -37,6 +40,7 @@ export default function Page() {
         address: data.address ?? "",
       });
       setParseState("done");
+      if (data.billStoragePath) setUploadState("done");
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -44,7 +48,11 @@ export default function Page() {
   const tariffOk = !!parsed && parsed.kwhTariff > 0;
   const addressOk = !!parsed && (parsed.address ?? "").trim().length >= 8;
   const isValid =
-    !!data.billFileName && parseState === "done" && tariffOk && addressOk;
+    !!data.billFileName &&
+    parseState === "done" &&
+    tariffOk &&
+    addressOk &&
+    uploadState === "done";
 
   const missingFields: string[] = [];
   if (parseState === "done" && !tariffOk) missingFields.push("tarifa unitária (R$/kWh)");
@@ -53,6 +61,28 @@ export default function Page() {
     parseError?.toLowerCase().includes("password") ||
     parseError?.toLowerCase().includes("encrypted")
   );
+
+  async function uploadBill(file: File) {
+    setUploadState("uploading");
+    setUploadError(null);
+    try {
+      const form = new FormData();
+      form.append("file", file);
+      const res = await fetch("/api/onboarding/upload-bill", {
+        method: "POST",
+        body: form,
+      });
+      const json = await res.json();
+      if (!res.ok || json.error) {
+        throw new Error(json.error ?? "Falha no envio.");
+      }
+      update({ billStoragePath: json.path as string });
+      setUploadState("done");
+    } catch (err) {
+      setUploadError(String(err instanceof Error ? err.message : err));
+      setUploadState("error");
+    }
+  }
 
   async function parseBill(file: File, password?: string) {
     setParseState("parsing");
@@ -78,6 +108,10 @@ export default function Page() {
         ...(result.installationNumber ? { installationNumber: result.installationNumber } : {}),
         ...(result.address ? { address: result.address } : {}),
       });
+
+      // Sobe o PDF pro Storage só depois de confirmar que é mesmo
+      // uma conta de luz parseável — evita lixo no bucket.
+      uploadBill(file);
     } catch (err) {
       setParseError(String(err instanceof Error ? err.message : err));
       setParseState("error");
@@ -118,10 +152,13 @@ export default function Page() {
       kwhTariff: 0,
       consumptionHistory: [],
       billPassword: "",
+      billStoragePath: null,
     });
     setParseState("idle");
     setParseError(null);
     setParsed(null);
+    setUploadState("idle");
+    setUploadError(null);
     setShowPwdField(false);
   }
 
@@ -162,13 +199,13 @@ export default function Page() {
                     </p>
                   )}
                 </div>
-                {parseState === "parsing" && (
+                {(parseState === "parsing" || uploadState === "uploading") && (
                   <Loader2 size={16} className="animate-spin text-secondary-500 shrink-0" />
                 )}
-                {parseState === "done" && (
+                {parseState === "done" && uploadState === "done" && (
                   <CheckCircle2 size={16} className="text-secondary-700 shrink-0" />
                 )}
-                {parseState === "error" && (
+                {(parseState === "error" || uploadState === "error") && (
                   <AlertCircle size={16} className="text-red-500 shrink-0" />
                 )}
                 <button
@@ -187,6 +224,30 @@ export default function Page() {
                   <Loader2 size={11} className="animate-spin" />
                   Extraindo consumo e tarifa…
                 </p>
+              )}
+
+              {parseState === "done" && uploadState === "uploading" && (
+                <p className="font-label text-xs text-secondary-500 flex items-center gap-2 px-1">
+                  <Loader2 size={11} className="animate-spin" />
+                  Enviando arquivo com segurança…
+                </p>
+              )}
+
+              {uploadState === "error" && (
+                <div className="flex items-center justify-between gap-2 px-1">
+                  <p className="font-label text-xs text-red-600">
+                    {uploadError ?? "Falha no envio do arquivo."}
+                  </p>
+                  {fileRef.current && (
+                    <button
+                      type="button"
+                      onClick={() => fileRef.current && uploadBill(fileRef.current)}
+                      className="font-label text-xs text-secondary-700 underline underline-offset-2 hover:text-secondary-900 transition-colors"
+                    >
+                      Tentar de novo
+                    </button>
+                  )}
+                </div>
               )}
 
               {parseState === "error" && (

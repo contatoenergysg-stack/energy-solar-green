@@ -156,6 +156,7 @@ export async function submitOnboarding(
     titular_civil_status: formData.civilStatus || null,
     titular_nationality: formData.nationality,
     titular_profession: formData.profession || null,
+    energy_bill_path: formData.billStoragePath || null,
   });
 
   return { ok: true, subscriptionId: sub.id };
