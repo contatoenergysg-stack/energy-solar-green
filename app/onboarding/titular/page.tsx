@@ -10,6 +10,7 @@ import { FormEvent } from "react";
 export default function Page() {
   const router = useRouter();
   const { data, update } = useOnboarding();
+  const isCnpj = data.documentType === "cnpj";
 
   const formatRg = (raw: string): string => {
     const digits = raw.replace(/\D/g, "").slice(0, 9);
@@ -21,7 +22,7 @@ export default function Page() {
 
   const isValid =
     data.fullName.trim().length >= 2 &&
-    data.rg.trim().length >= 4;
+    (isCnpj || data.rg.trim().length >= 4);
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -30,8 +31,12 @@ export default function Page() {
 
   return (
     <OnboardingShell
-      title="Dados do titular da conta"
-      description="Preencha os dados do titular registrado na distribuidora de energia."
+      title={isCnpj ? "Dados da empresa titular" : "Dados do titular da conta"}
+      description={
+        isCnpj
+          ? "Confirme os dados da empresa registrada na distribuidora de energia."
+          : "Preencha os dados do titular registrado na distribuidora de energia."
+      }
       accent="Identificação"
     >
       <form onSubmit={onSubmit} className="space-y-4">
@@ -46,25 +51,33 @@ export default function Page() {
 
         <div>
           <Input
-            label="Nome do titular"
-            placeholder="Nome conforme registrado na distribuidora"
+            label={isCnpj ? "Razão social" : "Nome do titular"}
+            placeholder={
+              isCnpj
+                ? "Razão social conforme Receita Federal"
+                : "Nome conforme registrado na distribuidora"
+            }
             value={data.fullName}
             onChange={(e) => update({ fullName: e.target.value })}
             required
           />
           <p className="mt-1.5 font-label text-[11px] text-secondary-500">
-            Nome registrado na distribuidora — pode ser diferente do contato.
+            {isCnpj
+              ? "Razão social registrada na distribuidora — pode ser diferente do contato."
+              : "Nome registrado na distribuidora — pode ser diferente do contato."}
           </p>
         </div>
 
-        <Input
-          label="RG"
-          placeholder="00.000.000-0"
-          value={data.rg}
-          onChange={(e) => update({ rg: formatRg(e.target.value) })}
-          required
-          inputMode="numeric"
-        />
+        {!isCnpj && (
+          <Input
+            label="RG"
+            placeholder="00.000.000-0"
+            value={data.rg}
+            onChange={(e) => update({ rg: formatRg(e.target.value) })}
+            required
+            inputMode="numeric"
+          />
+        )}
 
         <OnboardingNav backHref="/onboarding/documento" nextDisabled={!isValid} />
       </form>

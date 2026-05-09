@@ -43,10 +43,14 @@ export async function POST(req: NextRequest) {
     const data = (await req.json()) as OnboardingData;
     steps.push("1. Dados recebidos");
 
-    const templateId = process.env.ZAPSIGN_TEMPLATE_ID;
+    const isCnpj = data.documentType === "cnpj";
+    const templateId = isCnpj
+      ? process.env.ZAPSIGN_TEMPLATE_ID_CNPJ
+      : process.env.ZAPSIGN_TEMPLATE_ID;
     if (!templateId) {
+      const varName = isCnpj ? "ZAPSIGN_TEMPLATE_ID_CNPJ" : "ZAPSIGN_TEMPLATE_ID";
       return NextResponse.json(
-        { error: "ZAPSIGN_TEMPLATE_ID não configurado.", steps },
+        { error: `${varName} não configurado.`, steps },
         { status: 500 }
       );
     }
@@ -89,7 +93,9 @@ export async function POST(req: NextRequest) {
       { de: "{{desconto}}", para: discount },
       { de: "{{numero_uc}}", para: data.installationNumber ?? "" },
       { de: "{{nome_completo}}", para: data.fullName || data.name },
-      { de: "{{cpf}}", para: data.document ?? "" },
+      isCnpj
+        ? { de: "{{cnpj}}", para: data.document ?? "" }
+        : { de: "{{cpf}}", para: data.document ?? "" },
       { de: "{{endereco}}", para: data.address ?? "" },
       { de: "{{telefone}}", para: data.phone ?? "" },
       { de: "{{email}}", para: data.email ?? "" },
